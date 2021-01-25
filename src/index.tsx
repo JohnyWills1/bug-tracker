@@ -1,21 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer";
+import { AuthProvider } from "./contexts/AuthContext";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./Home";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<ChakraProvider>
-			<Navbar />
-			<App />
-			<Footer />
-		</ChakraProvider>
+		<Router>
+			<Switch>
+				<AuthProvider>
+					<ChakraProvider>
+						<Navbar />
+						<Route exact path='/' component={Home} />
+						<App />
+						<Footer />
+					</ChakraProvider>
+				</AuthProvider>
+			</Switch>
+		</Router>
 	</React.StrictMode>,
-
 	document.getElementById("root")
 );
 

@@ -12,21 +12,27 @@ import {
 	Text,
 	Stack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../contexts/AuthContext";
 
 interface Props {}
 
 interface formData {
-	username: string;
-	password: string;
+	emailRequired: string;
+	passwordRequired: string;
 }
 
 const SignIn = (props: Props) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
-	const { register, handleSubmit, watch, errors } = useForm();
-	const onSubmit = (data: formData) => alert(JSON.stringify(data));
+	const { register, handleSubmit, errors } = useForm();
+
+	const { logIn } = useContext(AuthContext);
+
+	const onSubmit = (data: formData) => {
+		logIn(data.emailRequired, data.passwordRequired);
+	};
 
 	return (
 		<>
@@ -40,9 +46,9 @@ const SignIn = (props: Props) => {
 						<ModalCloseButton />
 						<ModalBody>
 							<Stack>
-								<Text>Username: </Text>
-								<Input name='usernameRequired' placeholder='Username' ref={register({ required: true })} />
-								{errors.usernameRequired && <span>This field is required</span>}
+								<Text>e-mail: </Text>
+								<Input name='emailRequired' placeholder='e-mail' ref={register({ required: true })} />
+								{errors.emailRequired && <span>This field is required</span>}
 
 								<Text>Password: </Text>
 								<Input
