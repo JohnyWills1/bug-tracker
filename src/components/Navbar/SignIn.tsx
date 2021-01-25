@@ -11,10 +11,12 @@ import {
 	Input,
 	Text,
 	Stack,
+	Link,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 
 interface Props {}
 
@@ -28,10 +30,26 @@ const SignIn = (props: Props) => {
 
 	const { register, handleSubmit, errors } = useForm();
 
-	const { logIn } = useContext(AuthContext);
+	const { logIn } = useAuth();
 
-	const onSubmit = (data: formData) => {
-		logIn(data.emailRequired, data.passwordRequired);
+	// React Router
+	const history = useHistory();
+
+	// Hooks
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	const onSubmit = async (data: formData, e: any) => {
+		e.preventDefault();
+		setIsSubmitting(true);
+		try {
+			await logIn(data.emailRequired, data.passwordRequired).then((resp: any) => {
+				setIsSubmitting(false);
+			});
+			history.push("/dashboard");
+		} catch (error) {
+			console.log(error);
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
@@ -47,7 +65,12 @@ const SignIn = (props: Props) => {
 						<ModalBody>
 							<Stack>
 								<Text>e-mail: </Text>
-								<Input name='emailRequired' placeholder='e-mail' ref={register({ required: true })} />
+								<Input
+									name='emailRequired'
+									placeholder='e-mail'
+									defaultValue='test@gmail.com'
+									ref={register({ required: true })}
+								/>
 								{errors.emailRequired && <span>This field is required</span>}
 
 								<Text>Password: </Text>
@@ -55,9 +78,18 @@ const SignIn = (props: Props) => {
 									name='passwordRequired'
 									placeholder='Password'
 									type='password'
+									defaultValue='test123'
 									ref={register({ required: true })}
 								/>
 								{errors.passwordRequired && <span>This field is required</span>}
+
+								<Link
+									onClick={(e) => {
+										history.push("/forgot-password");
+										onClose();
+									}}>
+									Forgot Your Password?
+								</Link>
 							</Stack>
 						</ModalBody>
 
@@ -65,7 +97,7 @@ const SignIn = (props: Props) => {
 							<Button colorScheme='blue' mr={3} onClick={onClose}>
 								Close
 							</Button>
-							<Button colorScheme='green' type='submit'>
+							<Button colorScheme='green' type='submit' isLoading={isSubmitting}>
 								Submit
 							</Button>
 						</ModalFooter>

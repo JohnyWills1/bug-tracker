@@ -8,6 +8,10 @@ import Footer from "./components/Footer";
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
+import PrivateRoute from "./components/PrivateRoute";
+import Dashboard from "./Dashboard";
+import ForgotPassword from "./ForgotPassword";
+import UpdateProfile from "./UpdateProfile";
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -17,6 +21,9 @@ ReactDOM.render(
 					<ChakraProvider>
 						<Navbar />
 						<Route exact path='/' component={Home} />
+						<PrivateRoute path='/dashboard' component={Dashboard} />
+						<PrivateRoute path='/update-profile' component={UpdateProfile} />
+						<Route exact path='/forgot-password' component={ForgotPassword} />
 						<App />
 						<Footer />
 					</ChakraProvider>

@@ -12,10 +12,11 @@ import {
 	Stack,
 	Text,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "./Errors.css";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 
 const SignUp = (props) => {
 	// ChakraUI modal state
@@ -23,18 +24,31 @@ const SignUp = (props) => {
 	// React Hook Forms
 	const { register, handleSubmit, errors, setError, clearErrors } = useForm();
 	// Auth Context
-	const { signUp } = useContext(AuthContext);
+	const { signUp } = useAuth;
+	// Hooks
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	// React Router
+	const history = useHistory();
 
-	const onSubmit = (data) => {
-		console.log(data);
+	const onSubmit = async (data) => {
+		setIsSubmitting(true);
+
 		if (data.passwordRequired === data.passwordConfRequired) {
-			alert(JSON.stringify(data));
-			signUp(data.emailRequired, data.passwordRequired);
+			try {
+				await signUp(data.emailRequired, data.passwordRequired).then((resp) => {
+					setIsSubmitting(false);
+				});
+				history.push("/dashboard");
+			} catch (error) {
+				console.log(error);
+				setIsSubmitting(false);
+			}
 		} else {
 			setError("passwordConfRequired", {
 				type: "manual",
 				message: "Passwords do not match!",
 			});
+			setIsSubmitting(false);
 		}
 	};
 
@@ -96,7 +110,7 @@ const SignUp = (props) => {
 							<Button colorScheme='blue' mr={3} onClick={onClose}>
 								Close
 							</Button>
-							<Button colorScheme='green' type='submit'>
+							<Button colorScheme='green' type='submit' isLoading={isSubmitting}>
 								Submit
 							</Button>
 						</ModalFooter>
