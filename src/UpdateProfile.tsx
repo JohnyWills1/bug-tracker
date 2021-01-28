@@ -66,7 +66,7 @@ const UpdateProfile = (props: Props) => {
 			.catch((err) => {
 				toast({
 					position: "top-right",
-					title: err.code,
+					title: err.code.replace("/", " "),
 					description: err.message,
 					status: "error",
 					duration: 5000,
@@ -83,7 +83,9 @@ const UpdateProfile = (props: Props) => {
 			<Box border='1px solid #EBEBEB' shadow='md' rounded='lg' p={5} m={5} w='400px' h='fit-content'>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<Stack spacing={4}>
-						<Heading textAlign='center'>Update Profile</Heading>
+						<Heading textAlign='center' bgClip='text' bgGradient='linear(to-r, #05668d,#00a896,#02c39a)'>
+							Update Profile
+						</Heading>
 
 						<Text>e-mail: </Text>
 						<Input
@@ -101,7 +103,7 @@ const UpdateProfile = (props: Props) => {
 							ref={register({ required: false })}
 						/>
 
-						<Text>Repeat Password: </Text>
+						<Text>Confirm Password: </Text>
 						<Input
 							name='passwordConfRequired'
 							placeholder='Confirm Password'

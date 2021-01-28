@@ -1,5 +1,4 @@
 import {
-	useDisclosure,
 	Button,
 	Modal,
 	ModalOverlay,
@@ -11,6 +10,7 @@ import {
 	Input,
 	Stack,
 	Text,
+	useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -18,29 +18,61 @@ import "./Errors.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 
-const SignUp = (props) => {
-	// ChakraUI modal state
-	const { isOpen, onOpen, onClose } = useDisclosure();
+interface Props {
+	isOpen: boolean;
+	onClose: () => void;
+}
+
+interface SignInProps {
+	passwordRequired: string;
+	passwordConfRequired: string;
+	usernameRequired: string;
+	emailRequired: string;
+}
+
+const SignUp = ({ isOpen, onClose }: Props) => {
+	// * ChakraUI
+	// ChakraUI Toast
+	const toast = useToast();
+
 	// React Hook Forms
 	const { register, handleSubmit, errors, setError, clearErrors } = useForm();
 	// Auth Context
-	const { signUp } = useAuth;
+	const { signUp } = useAuth();
 	// Hooks
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	// React Router
 	const history = useHistory();
 
-	const onSubmit = async (data) => {
+	const onSubmit = async (data: SignInProps) => {
 		setIsSubmitting(true);
 
 		if (data.passwordRequired === data.passwordConfRequired) {
 			try {
-				await signUp(data.emailRequired, data.passwordRequired).then((resp) => {
-					setIsSubmitting(false);
-				});
-				history.push("/dashboard");
+				await signUp(data.emailRequired, data.passwordRequired)
+					.then((resp: any) => {
+						setIsSubmitting(false);
+						toast({
+							position: "top-right",
+							title: "Account Created",
+							description: "Your account has been created successfully!",
+							status: "success",
+							duration: 5000,
+							isClosable: true,
+						});
+					})
+					.finally(() => {
+						history.push("/dashboard");
+					});
 			} catch (error) {
-				console.log(error);
+				toast({
+					position: "top-right",
+					title: error.code.replace("/", " "),
+					description: error.message,
+					status: "error",
+					duration: 5000,
+					isClosable: true,
+				});
 				setIsSubmitting(false);
 			}
 		} else {
@@ -54,8 +86,6 @@ const SignUp = (props) => {
 
 	return (
 		<>
-			<Button onClick={onOpen}>Sign Up</Button>
-
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 				<form onSubmit={handleSubmit(onSubmit)}>

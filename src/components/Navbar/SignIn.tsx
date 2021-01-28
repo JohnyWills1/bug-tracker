@@ -1,5 +1,4 @@
 import {
-	useDisclosure,
 	Button,
 	Modal,
 	ModalOverlay,
@@ -12,21 +11,27 @@ import {
 	Text,
 	Stack,
 	Link,
+	useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 
-interface Props {}
+interface Props {
+	isOpen: boolean;
+	onClose: () => void;
+}
 
 interface formData {
 	emailRequired: string;
 	passwordRequired: string;
 }
 
-const SignIn = (props: Props) => {
-	const { isOpen, onOpen, onClose } = useDisclosure();
+const SignIn = ({ isOpen, onClose }: Props) => {
+	// * ChakraUI
+	// Toast hook
+	const toast = useToast();
 
 	const { register, handleSubmit, errors } = useForm();
 
@@ -44,18 +49,32 @@ const SignIn = (props: Props) => {
 		try {
 			await logIn(data.emailRequired, data.passwordRequired).then((resp: any) => {
 				setIsSubmitting(false);
+				toast({
+					position: "top-right",
+					title: "Logged In",
+					description: "Welcome back friend!",
+					status: "success",
+					duration: 1000,
+					isClosable: true,
+				});
 			});
+			onClose();
 			history.push("/dashboard");
 		} catch (error) {
-			console.log(error);
 			setIsSubmitting(false);
+			toast({
+				position: "top-right",
+				title: error.code.replace("/", " "),
+				description: error.message,
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
 		}
 	};
 
 	return (
 		<>
-			<Button onClick={onOpen}>Sign In</Button>
-
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 				<form onSubmit={handleSubmit(onSubmit)}>

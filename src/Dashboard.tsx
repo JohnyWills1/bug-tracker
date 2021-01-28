@@ -10,7 +10,9 @@ const Dashboard = (props: Props) => {
 
 	return (
 		<Flex align='center' px={5} py={6} flexDirection='column' h='90vh'>
-			<Heading>Private Dashboard</Heading>
+			<Heading bgClip='text' bgGradient='linear(to-r, #660708,#ba181b,#e5383b)'>
+				Private Dashboard
+			</Heading>
 			<Stack>
 				<Text>{user.displayName}</Text>
 				<Text>{user.email}</Text>

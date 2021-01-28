@@ -39,7 +39,14 @@ const ForgotPassword = (props: Props) => {
 				});
 			});
 		} catch (error) {
-			console.log(error);
+			toast({
+				position: "top-right",
+				title: error.code.replace("/", " "),
+				description: error.message,
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
 			setIsSubmitting(false);
 		}
 	};
@@ -49,7 +56,9 @@ const ForgotPassword = (props: Props) => {
 			<Box border='1px solid #EBEBEB' shadow='md' rounded='lg' p={5} m={5} w='400px' h='fit-content'>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<Stack spacing={4}>
-						<Heading textAlign='center'>Password Reset</Heading>
+						<Heading textAlign='center' bgClip='text' bgGradient='linear(to-r, #7209b7,#4cc9f0)'>
+							Password Reset
+						</Heading>
 						<Text>Account e-mail: </Text>
 						<Input
 							name='emailRequired'
