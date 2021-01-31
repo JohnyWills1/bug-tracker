@@ -8,7 +8,7 @@ const Footer = (props: Props) => {
 	return (
 		<>
 			<Box borderTop='1px solid #EBEBEB' w='100%'>
-				<Flex justify='center' align='center' flexDirection='column' py={2} px={4} my={6}>
+				<Flex justify='center' align='center' flexDirection='column' py={2} px={4} my={2}>
 					<Text>Made with 🧡 by Johny Wills</Text>
 					<Stack isInline>
 						<Link href='https://github.com/JohnyWills1'>GitHub</Link>
