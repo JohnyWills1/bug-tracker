@@ -10,13 +10,29 @@ const Board = (props: any) => {
 
 	const onDragEnd = (result: any) => {
 		// TODO: reorder our column and update in state
-		const { destination, source, draggableId } = result;
+		const { destination, source, draggableId, type } = result;
 
 		if (!destination) {
 			return;
 		}
 
 		if (destination.droppableId === source.droppableId && destination.index === source.index) {
+			return;
+		}
+
+		if (type === "column") {
+			let newColumnOrder = Array.from(boardData.columnOrder);
+			newColumnOrder.splice(source.index, 1);
+			newColumnOrder.splice(destination.index, 0, draggableId);
+
+			setBoardData((prevData: any) => {
+				const newData = {
+					...prevData,
+					columnOrder: newColumnOrder,
+				};
+
+				return newData;
+			});
 			return;
 		}
 
@@ -105,21 +121,11 @@ const Board = (props: any) => {
 							const tasks = column.taskIds.map((id: any) => boardData.tasks[id]);
 
 							return (
-								<Droppable droppableId={column.id} type='task'>
-									{(provided) => (
-										<Column
-											{...provided.droppableProps}
-											innerRef={provided.innerRef}
-											key={column.id}
-											index={index}
-											column={column}>
-											{tasks.map((task: any, index: any) => {
-												return <IssueCard key={task.id} issue={task} index={index} delTask={delTask} />;
-											})}
-											{provided.placeholder}
-										</Column>
-									)}
-								</Droppable>
+								<Column key={column.id} index={index} column={column}>
+									{tasks.map((task: any, index: any) => {
+										return <IssueCard key={task.id} issue={task} index={index} delTask={delTask} />;
+									})}
+								</Column>
 							);
 						})}
 						{provided.placeholder}

@@ -1,7 +1,6 @@
 import React from "react";
-import { Box, Flex, Text, Stack, Avatar, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { Draggable } from "react-beautiful-dnd";
-import { CheckIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import IssueModal from "./IssueModal";
 
 interface Props {
