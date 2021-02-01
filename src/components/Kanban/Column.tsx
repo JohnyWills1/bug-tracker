@@ -13,7 +13,13 @@ const Column = ({ column, children, index }: Props) => {
 		<>
 			<Draggable draggableId={column.id} index={index}>
 				{(provided) => (
-					<Box rounded='xl' bgColor='#F4F5F7' w='100%' h='100%' {...provided.draggableProps} ref={provided.innerRef}>
+					<Box
+						rounded='xl'
+						bgColor='#F4F5F7'
+						w='100%'
+						h='fit-content'
+						{...provided.draggableProps}
+						ref={provided.innerRef}>
 						<Flex
 							justify='space-between'
 							py={3}
@@ -22,13 +28,12 @@ const Column = ({ column, children, index }: Props) => {
 							align='flex-start'
 							borderBottom='1px solid #d8dce3'
 							{...provided.dragHandleProps}>
-							<form>
-								<Editable defaultValue={column.title} w='fit-content' onEdit={() => console.log("Edit started")}>
-									<EditablePreview />
-									<EditableInput />
-								</Editable>
-							</form>
-							<Text w='fit-content'>{column.taskIds.length}</Text>
+							<Text w='fit-content' fontSize='sm' textTransform='uppercase' opacity='0.6'>
+								{column.title}
+							</Text>
+							<Text w='fit-content' opacity='0.6'>
+								{column.taskIds.length}
+							</Text>
 						</Flex>
 						<Droppable droppableId={column.id} type='task' direction='vertical'>
 							{(provided) => (

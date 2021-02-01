@@ -111,7 +111,9 @@ const Board = (props: any) => {
 					<Grid
 						w='95%'
 						h='80%'
-						templateColumns={`repeat(${boardData.columnOrder.length},1fr)`}
+						templateColumns={
+							boardData.columnOrder.length <= 4 ? `repeat(${boardData.columnOrder.length},1fr)` : `repeat(4,1fr)`
+						}
 						gap={4}
 						{...provided.droppableProps}
 						ref={provided.innerRef}>

@@ -6,7 +6,7 @@ interface Props {}
 const Home = (props: Props) => {
 	return (
 		<>
-			<Flex align='center' justify='center' px={5} py={6} flexDirection='column' h='90vh'>
+			<Flex align='center' px={5} py={6} flexDirection='column' minH='90vh' h='auto'>
 				<Board />
 			</Flex>
 		</>
