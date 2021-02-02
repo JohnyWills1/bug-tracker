@@ -19,10 +19,11 @@ interface Props {
 		id: string;
 		content?: string;
 	};
-	delTask: (id: any) => void;
+	columnId: any;
+	delTask: (id: any, columnId: any) => void;
 }
 
-const IssueModal = ({ isOpen, onClose, issue, delTask }: Props) => {
+const IssueModal = ({ isOpen, onClose, issue, delTask, columnId }: Props) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
@@ -32,7 +33,11 @@ const IssueModal = ({ isOpen, onClose, issue, delTask }: Props) => {
 
 				<ModalBody>
 					<Stack isInline>
-						<IconButton aria-label='delete issue button' onClick={() => delTask(issue.id)} icon={<DeleteIcon />} />
+						<IconButton
+							aria-label='delete issue button'
+							onClick={() => delTask(issue.id, columnId)}
+							icon={<DeleteIcon />}
+						/>
 					</Stack>
 					<Text>{issue.content}</Text>
 				</ModalBody>

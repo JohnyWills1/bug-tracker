@@ -9,10 +9,11 @@ interface Props {
 		content?: string;
 	};
 	index: any;
-	delTask: (id: any) => void;
+	delTask: (id: any, columnId: any) => void;
+	columnId: any;
 }
 
-const IssueCard = ({ issue, index, delTask }: Props) => {
+const IssueCard = ({ issue, index, delTask, columnId }: Props) => {
 	// * ChakraUI
 	// Modal hooks
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,7 +47,9 @@ const IssueCard = ({ issue, index, delTask }: Props) => {
 				</Flex> */}
 					</Flex>
 
-					{isOpen && <IssueModal isOpen={isOpen} onClose={onClose} issue={issue} delTask={delTask} />}
+					{isOpen && (
+						<IssueModal isOpen={isOpen} onClose={onClose} issue={issue} delTask={delTask} columnId={columnId} />
+					)}
 				</Box>
 			)}
 		</Draggable>

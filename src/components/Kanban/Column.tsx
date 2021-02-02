@@ -1,14 +1,16 @@
 import { Box, Flex, Text, Editable, EditableInput, EditablePreview } from "@chakra-ui/react";
 import React from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import AddCard from "./AddCard";
 
 interface Props {
 	column: any;
 	children?: React.ReactNode;
 	index: any;
+	addIssue: (issue: any, columnId: any) => void;
 }
 
-const Column = ({ column, children, index }: Props) => {
+const Column = ({ column, children, index, addIssue }: Props) => {
 	return (
 		<>
 			<Draggable draggableId={column.id} index={index}>
@@ -28,9 +30,14 @@ const Column = ({ column, children, index }: Props) => {
 							align='flex-start'
 							borderBottom='1px solid #d8dce3'
 							{...provided.dragHandleProps}>
-							<Text w='fit-content' fontSize='sm' textTransform='uppercase' opacity='0.6'>
+							{/* <Text w='fit-content' fontSize='sm' textTransform='uppercase' opacity='0.6'>
 								{column.title}
-							</Text>
+							</Text> */}
+							<Editable defaultValue={column.title}>
+								<EditablePreview />
+								<EditableInput />
+							</Editable>
+
 							<Text w='fit-content' opacity='0.6'>
 								{column.taskIds.length}
 							</Text>
@@ -48,6 +55,7 @@ const Column = ({ column, children, index }: Props) => {
 									{...provided.droppableProps}>
 									{children}
 									{provided.placeholder}
+									<AddCard addIssue={addIssue} columnId={column.id} />
 								</Flex>
 							)}
 						</Droppable>
