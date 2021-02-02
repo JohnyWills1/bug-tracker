@@ -32,7 +32,7 @@ const IssueCard = ({ issue, index, delTask, columnId }: Props) => {
 					p='10px'
 					onClick={onOpen}
 					style={{ userSelect: "none" }}
-					_hover={{ backgroundColor: "#EBECF0" }}
+					_hover={{ backgroundColor: "#EBECF0", cursor: "pointer" }}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}>

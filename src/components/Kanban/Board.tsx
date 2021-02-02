@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { Grid, EditablePreview, EditableInput, Editable } from "@chakra-ui/react";
+import { Grid, EditablePreview, EditableInput, Editable, Text } from "@chakra-ui/react";
 import Column from "./Column";
 import IssueCard from "./IssueCard";
 import initialData from "../../testdata";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 
-const Board = (props: any) => {
-	const [boardData, setBoardData]: any = useState(initialData);
+interface Props {
+	projectData: any;
+}
+
+const Board = ({ projectData }: Props) => {
+	const [boardData, setBoardData]: any = useState(projectData);
 
 	const onDragEnd = (result: any) => {
-		// TODO: reorder our column and update in state
 		const { destination, source, draggableId, type } = result;
 
 		if (!destination) {
@@ -177,12 +180,13 @@ const Board = (props: any) => {
 			<Droppable direction='horizontal' droppableId='all-columns' type='column'>
 				{(provided) => (
 					<Grid
-						w='95%'
+						w='100%'
 						h='80%'
-						templateColumns={
-							boardData.columnOrder.length <= 4 ? `repeat(${boardData.columnOrder.length},1fr)` : `repeat(4,1fr)`
-						}
+						templateColumns={`repeat(${boardData.columnOrder.length},1fr)`}
 						gap={4}
+						overflowX='auto'
+						overflowY='hidden'
+						pb={4}
 						{...provided.droppableProps}
 						ref={provided.innerRef}>
 						{boardData.columnOrder.map((columnId: string, index: any) => {

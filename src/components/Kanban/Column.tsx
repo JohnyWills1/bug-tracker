@@ -12,13 +12,14 @@ interface Props {
 
 const Column = ({ column, children, index, addIssue }: Props) => {
 	return (
-		<>
+		<div style={{ display: "inline-block" }}>
 			<Draggable draggableId={column.id} index={index}>
 				{(provided) => (
 					<Box
 						rounded='xl'
 						bgColor='#F4F5F7'
 						w='100%'
+						minW='250px'
 						h='fit-content'
 						{...provided.draggableProps}
 						ref={provided.innerRef}>
@@ -62,7 +63,7 @@ const Column = ({ column, children, index, addIssue }: Props) => {
 					</Box>
 				)}
 			</Draggable>
-		</>
+		</div>
 	);
 };
 

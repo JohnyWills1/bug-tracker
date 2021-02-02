@@ -1,6 +1,5 @@
 import React from "react";
 import { Flex, Heading } from "@chakra-ui/react";
-import Board from "./components/Kanban/Board";
 interface Props {}
 
 const Home = (props: Props) => {

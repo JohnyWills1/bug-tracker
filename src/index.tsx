@@ -12,6 +12,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./Dashboard";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
+import Project from "./components/Projects/Project";
+import PageNotFound from "./PageNotFound";
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -22,8 +24,10 @@ ReactDOM.render(
 						<Navbar />
 						<Route exact path='/' component={Home} />
 						<PrivateRoute path='/dashboard' component={Dashboard} />
+						<PrivateRoute path='/projects/:id' component={Project} />
 						<PrivateRoute path='/update-profile' component={UpdateProfile} />
 						<Route exact path='/forgot-password' component={ForgotPassword} />
+						<Route exact path='/404' component={PageNotFound} />
 						<App />
 						<Footer />
 					</ChakraProvider>

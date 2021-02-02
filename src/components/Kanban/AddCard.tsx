@@ -23,9 +23,9 @@ const AddCard = ({ addIssue, columnId }: Props) => {
 	};
 
 	return (
-		<Flex align='center' flexDirection='column' w='105%' px={2} pb={2}>
+		<Flex align='center' flexDirection='column' w='100%' px={2} pb={2}>
 			{isEditing ? (
-				<form onSubmit={handleSubmit(onSubmit)}>
+				<form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
 					<Textarea
 						placeholder='Enter a title for this card'
 						bgColor='white'
