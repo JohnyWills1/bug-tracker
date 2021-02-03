@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Box, Flex, Stack, Text, Button, Link, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Stack, Text, Button, Link, useDisclosure, IconButton } from "@chakra-ui/react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { AddIcon } from "@chakra-ui/icons";
+import CreateProjectModal from "../Projects/CreateProjectModal";
 
 interface Props {}
 
@@ -46,8 +48,12 @@ const Navbar = (props: Props) => {
 						<>
 							{user ? (
 								<>
-									<Link as={RouterLink} to='/dashboard'>
-										Dashboard
+									<IconButton aria-label='create a project button' icon={<AddIcon />} onClick={onOpen} />
+
+									<CreateProjectModal isOpen={isOpen} onClose={onClose} />
+
+									<Link as={RouterLink} to='/projects'>
+										Projects
 									</Link>
 									<Link as={RouterLink} to='/update-profile'>
 										{user.email}

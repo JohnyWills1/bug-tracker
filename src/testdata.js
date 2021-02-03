@@ -45,6 +45,8 @@ const initialData = [
 		},
 		columnOrder: ["column-1", "column-2", "column-3", "column-4", "column-5", "column-6"],
 		projectTitle: "Test Project Title",
+		starred: true,
+		background: "#3182CE",
 	},
 	{
 		id: "project-2",
@@ -74,6 +76,99 @@ const initialData = [
 		},
 		columnOrder: ["column-1", "column-2", "column-3"],
 		projectTitle: "Test Project Title 2",
+		starred: true,
+	},
+	{
+		id: "project-3",
+		tasks: {
+			"task-1": { id: "task-1", content: "Take out the garbage" },
+			"task-2": { id: "task-2", content: "Get money" },
+			"task-3": { id: "task-3", content: "Destroy a hedge fund" },
+			"task-4": { id: "task-4", content: "Stonks" },
+			"task-5": { id: "task-5", content: "Shower" },
+		},
+		columns: {
+			"column-1": {
+				id: "column-1",
+				title: "To Do",
+				taskIds: ["task-1", "task-2", "task-3"],
+			},
+			"column-2": {
+				id: "column-2",
+				title: "In Development",
+				taskIds: ["task-4"],
+			},
+			"column-3": {
+				id: "column-3",
+				title: "Backlog",
+				taskIds: ["task-5"],
+			},
+		},
+		columnOrder: ["column-1", "column-2", "column-3"],
+		projectTitle: "Test Project Title 2",
+		starred: false,
+	},
+
+	{
+		id: "project-4",
+		tasks: {
+			"task-1": { id: "task-1", content: "Take out the garbage" },
+			"task-2": { id: "task-2", content: "Get money" },
+			"task-3": { id: "task-3", content: "Destroy a hedge fund" },
+			"task-4": { id: "task-4", content: "Stonks" },
+			"task-5": { id: "task-5", content: "Shower" },
+		},
+		columns: {
+			"column-1": {
+				id: "column-1",
+				title: "To Do",
+				taskIds: ["task-1", "task-2", "task-3"],
+			},
+			"column-2": {
+				id: "column-2",
+				title: "In Development",
+				taskIds: ["task-4"],
+			},
+			"column-3": {
+				id: "column-3",
+				title: "Backlog",
+				taskIds: ["task-5"],
+			},
+		},
+		columnOrder: ["column-1", "column-2", "column-3"],
+		projectTitle: "Test Project Title 2",
+		starred: false,
+	},
+
+	{
+		id: "project-5",
+		tasks: {
+			"task-1": { id: "task-1", content: "Take out the garbage" },
+			"task-2": { id: "task-2", content: "Get money" },
+			"task-3": { id: "task-3", content: "Destroy a hedge fund" },
+			"task-4": { id: "task-4", content: "Stonks" },
+			"task-5": { id: "task-5", content: "Shower" },
+		},
+		columns: {
+			"column-1": {
+				id: "column-1",
+				title: "To Do",
+				taskIds: ["task-1", "task-2", "task-3"],
+			},
+			"column-2": {
+				id: "column-2",
+				title: "In Development",
+				taskIds: ["task-4"],
+			},
+			"column-3": {
+				id: "column-3",
+				title: "Backlog",
+				taskIds: ["task-5"],
+			},
+		},
+		columnOrder: ["column-1", "column-2", "column-3"],
+		projectTitle: "Test Project Title 2",
+		starred: false,
 	},
 ];
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex } from "@chakra-ui/react";
 import { Redirect, useParams } from "react-router-dom";
 import initialData from "../../testdata";
 import Board from "../Kanban/Board";
@@ -20,6 +20,16 @@ const Project = (props: Props) => {
 
 	return (
 		<Flex align='center' px={5} py={6} flexDirection='column' minH='90vh' h='auto'>
+			<Breadcrumb pb={2}>
+				<BreadcrumbItem>
+					<BreadcrumbLink href='/dashboard'>Projects</BreadcrumbLink>
+				</BreadcrumbItem>
+				<BreadcrumbItem>
+					<BreadcrumbLink href='' isCurrentPage>
+						{id}
+					</BreadcrumbLink>
+				</BreadcrumbItem>
+			</Breadcrumb>
 			<Board projectData={projectData} />
 		</Flex>
 	);

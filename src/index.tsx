@@ -9,7 +9,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import PrivateRoute from "./components/PrivateRoute";
-import Dashboard from "./Dashboard";
+import Projects from "./Projects";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import Project from "./components/Projects/Project";
@@ -23,7 +23,7 @@ ReactDOM.render(
 					<ChakraProvider>
 						<Navbar />
 						<Route exact path='/' component={Home} />
-						<PrivateRoute path='/dashboard' component={Dashboard} />
+						<PrivateRoute exact path='/projects' component={Projects} />
 						<PrivateRoute path='/projects/:id' component={Project} />
 						<PrivateRoute path='/update-profile' component={UpdateProfile} />
 						<Route exact path='/forgot-password' component={ForgotPassword} />
