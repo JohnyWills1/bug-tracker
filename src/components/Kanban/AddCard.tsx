@@ -22,6 +22,12 @@ const AddCard = ({ addIssue, columnId }: Props) => {
 		addIssue(data.content, columnId);
 	};
 
+	const handleUserKeyPress = (e: any) => {
+		if (e.key === "Enter" && !e.shiftKey) {
+			handleSubmit(onSubmit)();
+		}
+	};
+
 	return (
 		<Flex align='center' flexDirection='column' w='100%' px={2} pb={2}>
 			{isEditing ? (
@@ -31,6 +37,7 @@ const AddCard = ({ addIssue, columnId }: Props) => {
 						bgColor='white'
 						border='none'
 						name='content'
+						onKeyPress={handleUserKeyPress}
 						ref={register({ required: true })}
 					/>
 					<Stack align='center' mt={2} isInline>

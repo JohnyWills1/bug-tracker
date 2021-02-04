@@ -4,6 +4,7 @@ import Column from "./Column";
 import IssueCard from "./IssueCard";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
+import AddColumn from "./AddColumn";
 
 interface Props {
 	projectData: any;
@@ -181,35 +182,37 @@ const Board = ({ projectData }: Props) => {
 					<Grid
 						w='100%'
 						h='80%'
-						templateColumns={`repeat(${boardData.columnOrder.length},1fr)`}
+						templateColumns={`repeat(${boardData.columnOrder.length + 1},max-content)`}
 						gap={4}
 						overflowX='auto'
 						overflowY='hidden'
 						pb={4}
 						{...provided.droppableProps}
 						ref={provided.innerRef}>
-						{boardData.columnOrder.map((columnId: string, index: any) => {
-							const column = boardData.columns[columnId];
+						<>
+							{boardData.columnOrder.map((columnId: string, index: any) => {
+								const column = boardData.columns[columnId];
 
-							const tasks = column.taskIds.map((id: any) => boardData.tasks[id]);
+								const tasks = column.taskIds.map((id: any) => boardData.tasks[id]);
 
-							return (
-								<Column key={column.id} index={index} column={column} addIssue={addIssue}>
-									{tasks.map((task: any, index: any) => {
-										return (
-											<IssueCard
-												key={task.id}
-												issue={task}
-												index={index}
-												delTask={delTask}
-												columnId={columnId}
-											/>
-										);
-									})}
-								</Column>
-							);
-						})}
-						{provided.placeholder}
+								return (
+									<Column key={column.id} index={index} column={column} addIssue={addIssue}>
+										{tasks.map((task: any, index: any) => {
+											return (
+												<IssueCard
+													key={task.id}
+													issue={task}
+													index={index}
+													delTask={delTask}
+													columnId={columnId}
+												/>
+											);
+										})}
+									</Column>
+								);
+							})}
+							<AddColumn />
+						</>
 					</Grid>
 				)}
 			</Droppable>
