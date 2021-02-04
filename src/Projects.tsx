@@ -1,3 +1,4 @@
+import { CalendarIcon, StarIcon } from "@chakra-ui/icons";
 import { Flex, Heading } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ProjectsList from "./components/Projects/ProjectsList";
@@ -14,31 +15,77 @@ const Projects = (props: Props) => {
 	const [starredProjects, setStarredProjects] = useState(initialStarredProjects);
 
 	const addToStarred = (projectId: any) => {
-		// TODO: add true to project and filter through all projects again to get a new list of starred projects
-	};
-
-	const deleteProject = (projectId: any) => {
-		// TODO: remove project from array and save new array to state
+		handleStarred(projectId, true);
 	};
 
 	const removeFromStarred = (projectId: any) => {
-		// TODO: use id to find and change starred boolean to false, then filter
-		// projects again, finally update state
+		handleStarred(projectId, false);
+	};
+
+	const handleStarred = (projectId: any, addOrRemove: boolean) => {
+		setProjects((prevData: any) => {
+			let removedProject = prevData.find((project: any) => project.id === projectId);
+			const removedProjectIndex = prevData.indexOf(removedProject);
+			let removedProjectsList = prevData.filter((project: any) => project.id !== projectId);
+
+			removedProject.starred = addOrRemove;
+			removedProjectsList.splice(removedProjectIndex, 0, removedProject);
+
+			let newData = [...removedProjectsList];
+
+			const newStarredList = newData.filter((project: any) => project.starred === true);
+
+			setStarredProjects(newStarredList);
+
+			return newData;
+		});
+	};
+
+	const deleteProject = (projectId: any) => {
+		setProjects((prevData: any) => {
+			const newData = prevData.filter((project: any) => project.id !== projectId);
+
+			const newStarredList = newData.filter((project: any) => project.starred === true);
+
+			setStarredProjects(newStarredList);
+
+			return newData;
+		});
 	};
 
 	return (
-		<Flex align='center' px={5} py={6} flexDirection='column' minH='90vh' h='auto'>
+		<Flex px={5} py={6} flexDirection='column' minH='90vh' h='auto'>
 			{/* <Heading bgClip='text' textAlign='center' w='50%' bgGradient='linear(to-r, #660708,#ba181b,#e5383b)' mb={6}>
 				Dashboard
 			</Heading> */}
 
-			<Heading pb='1rem'>Starred</Heading>
-			<ProjectsList projects={starredProjects} showAddNew={false} />
-
-			<Heading pb={4} pt={6}>
-				Projects
+			<Heading pb={4} pl={4} w='fit-content'>
+				<Flex align='center'>
+					<StarIcon w={7} h={7} mr={4} color='yellow.400' />
+					Starred
+				</Flex>
 			</Heading>
-			<ProjectsList projects={projects} showAddNew={true} />
+
+			<ProjectsList
+				projects={starredProjects}
+				showAddNew={false}
+				addToStarred={addToStarred}
+				removeFromStarred={removeFromStarred}
+				deleteProject={deleteProject}
+			/>
+			<Heading pb={4} pt={6} pl={4}>
+				<Flex align='center'>
+					<CalendarIcon w={7} h={7} mr={4} color='red.400' />
+					Projects
+				</Flex>
+			</Heading>
+			<ProjectsList
+				projects={projects}
+				showAddNew={true}
+				addToStarred={addToStarred}
+				removeFromStarred={removeFromStarred}
+				deleteProject={deleteProject}
+			/>
 		</Flex>
 	);
 };

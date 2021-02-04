@@ -5,9 +5,12 @@ import React from "react";
 
 interface Props {
 	project: any;
+	addToStarred: (projectId: string) => void;
+	deleteProject: (projectId: string) => void;
+	removeFromStarred: (projectId: string) => void;
 }
 
-const ProjectCard = ({ project }: Props) => {
+const ProjectCard = ({ project, addToStarred, removeFromStarred, deleteProject }: Props) => {
 	return (
 		<>
 			<Box
@@ -22,12 +25,20 @@ const ProjectCard = ({ project }: Props) => {
 				<Flex w='100%' h='100%' flexDirection='column'>
 					<Flex justify='space-between'>
 						<IconButton
-							colorScheme={project.starred ? "yellow" : "gray"}
+							color={project.starred ? "yellow.400" : "gray.400"}
 							aria-label='add to favourites'
 							icon={<StarIcon />}
+							variant='ghost'
 							size='xs'
+							onClick={() => (project.starred ? removeFromStarred(project.id) : addToStarred(project.id))}
 						/>
-						<IconButton variant='outline' aria-label='delete project' icon={<CloseIcon />} size='xs' />
+						<IconButton
+							variant='ghost'
+							aria-label='delete project'
+							icon={<CloseIcon />}
+							size='xs'
+							onClick={() => deleteProject(project.id)}
+						/>
 					</Flex>
 					<Link to={"/projects/" + project.id} style={{ width: "100%", height: "100%" }}>
 						{/* Make this text black border, white inner as it can be read over any color */}

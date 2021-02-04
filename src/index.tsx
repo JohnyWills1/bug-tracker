@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "./components/Navbar/Navbar";
@@ -24,11 +23,10 @@ ReactDOM.render(
 						<Navbar />
 						<Route exact path='/' component={Home} />
 						<PrivateRoute exact path='/projects' component={Projects} />
-						<PrivateRoute path='/projects/:id' component={Project} />
-						<PrivateRoute path='/update-profile' component={UpdateProfile} />
+						<PrivateRoute exact path='/projects/:id' component={Project} />
+						<PrivateRoute exact path='/update-profile' component={UpdateProfile} />
 						<Route exact path='/forgot-password' component={ForgotPassword} />
 						<Route exact path='/404' component={PageNotFound} />
-						<App />
 						<Footer />
 					</ChakraProvider>
 				</AuthProvider>

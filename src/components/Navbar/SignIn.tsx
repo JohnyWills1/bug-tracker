@@ -59,7 +59,7 @@ const SignIn = ({ isOpen, onClose }: Props) => {
 				});
 			});
 			onClose();
-			history.push("/dashboard");
+			history.push("/projects");
 		} catch (error) {
 			setIsSubmitting(false);
 			toast({

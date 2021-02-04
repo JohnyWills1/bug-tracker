@@ -105,7 +105,7 @@ const initialData = [
 			},
 		},
 		columnOrder: ["column-1", "column-2", "column-3"],
-		projectTitle: "Test Project Title 2",
+		projectTitle: "Test 3",
 		starred: false,
 	},
 
@@ -136,7 +136,7 @@ const initialData = [
 			},
 		},
 		columnOrder: ["column-1", "column-2", "column-3"],
-		projectTitle: "Test Project Title 2",
+		projectTitle: "Test 4",
 		starred: false,
 	},
 
@@ -167,7 +167,7 @@ const initialData = [
 			},
 		},
 		columnOrder: ["column-1", "column-2", "column-3"],
-		projectTitle: "Test Project Title 2",
+		projectTitle: "Test 5",
 		starred: false,
 	},
 ];

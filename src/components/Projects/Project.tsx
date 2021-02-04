@@ -22,7 +22,7 @@ const Project = (props: Props) => {
 		<Flex align='center' px={5} py={6} flexDirection='column' minH='90vh' h='auto'>
 			<Breadcrumb pb={2}>
 				<BreadcrumbItem>
-					<BreadcrumbLink href='/dashboard'>Projects</BreadcrumbLink>
+					<BreadcrumbLink href='/projects'>Projects</BreadcrumbLink>
 				</BreadcrumbItem>
 				<BreadcrumbItem>
 					<BreadcrumbLink href='' isCurrentPage>

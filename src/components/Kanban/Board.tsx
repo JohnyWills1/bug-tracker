@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Grid, EditablePreview, EditableInput, Editable, Text } from "@chakra-ui/react";
+import { Grid, EditablePreview, EditableInput, Editable } from "@chakra-ui/react";
 import Column from "./Column";
 import IssueCard from "./IssueCard";
-import initialData from "../../testdata";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 

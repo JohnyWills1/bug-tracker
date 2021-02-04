@@ -62,7 +62,7 @@ const SignUp = ({ isOpen, onClose }: Props) => {
 						});
 					})
 					.finally(() => {
-						history.push("/dashboard");
+						history.push("/projects");
 					});
 			} catch (error) {
 				toast({
