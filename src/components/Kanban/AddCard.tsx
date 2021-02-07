@@ -55,12 +55,7 @@ const AddCard = ({ addIssue, columnId }: Props) => {
 					</Stack>
 				</form>
 			) : (
-				<Button
-					variant='outline'
-					onClick={() => setEditing(!isEditing)}
-					colorScheme='gray'
-					size='sm'
-					leftIcon={<AddIcon />}>
+				<Button onClick={() => setEditing(!isEditing)} bg='white' size='sm' leftIcon={<AddIcon />}>
 					Add a card
 				</Button>
 			)}

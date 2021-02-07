@@ -22,35 +22,31 @@ const Column = ({ column, children, index, addIssue }: Props) => {
 						minW='250px'
 						h='fit-content'
 						{...provided.draggableProps}
+						{...provided.dragHandleProps}
 						ref={provided.innerRef}>
-						<Flex
-							justify='space-between'
-							py={3}
-							px={4}
-							w='100%'
-							align='flex-start'
-							borderBottom='1px solid #d8dce3'
-							{...provided.dragHandleProps}>
-							{/* <Text w='fit-content' fontSize='sm' textTransform='uppercase' opacity='0.6'>
-								{column.title}
-							</Text> */}
+						<Flex py={3} px={4} justify='space-between' zIndex='999'>
 							<Editable defaultValue={column.title}>
 								<EditablePreview />
 								<EditableInput />
 							</Editable>
-
 							<Text w='fit-content' opacity='0.6'>
 								{column.taskIds.length}
 							</Text>
 						</Flex>
+
+						<Flex w='100%' align='flex-start' borderBottom='1px solid #d8dce3'></Flex>
 						<Droppable droppableId={column.id} type='task' direction='vertical'>
-							{(provided) => (
+							{(provided, snapshot) => (
 								<Flex
 									justify='flex-start'
 									py={4}
 									px={6}
 									align='center'
 									h='100%'
+									rounded='xl'
+									borderTopLeftRadius='0'
+									borderTopRadius='0'
+									bg={snapshot.isDraggingOver ? "blue.300" : "none"}
 									flexDirection='column'
 									ref={provided.innerRef}
 									{...provided.droppableProps}>

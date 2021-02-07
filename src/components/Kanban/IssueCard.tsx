@@ -20,11 +20,11 @@ const IssueCard = ({ issue, index, delTask, columnId }: Props) => {
 
 	return (
 		<Draggable draggableId={issue.id} index={index}>
-			{(provided) => (
+			{(provided, snapshot) => (
 				<Box
 					rounded='lg'
 					shadow='sm'
-					bgColor='white'
+					bg={snapshot.isDragging ? "blue.100" : "white"}
 					w='100%'
 					h='fit-content'
 					minH='100px'

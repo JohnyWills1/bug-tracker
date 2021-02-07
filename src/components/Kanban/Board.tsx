@@ -211,6 +211,8 @@ const Board = ({ projectData }: Props) => {
 									</Column>
 								);
 							})}
+
+							{provided.placeholder}
 							<AddColumn />
 						</>
 					</Grid>
