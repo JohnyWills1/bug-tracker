@@ -1,8 +1,9 @@
 import React from "react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex } from "@chakra-ui/react";
-import { Redirect, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import initialData from "../../testdata";
 import Board from "../Kanban/Board";
+import PageNotFound from "../../PageNotFound";
 
 interface Props {}
 
@@ -15,7 +16,7 @@ const Project = (props: Props) => {
 
 	// Redirect if project does not exist
 	if (projectData === undefined) {
-		return <Redirect to={"/404"} />;
+		return <PageNotFound />;
 	}
 
 	return (
