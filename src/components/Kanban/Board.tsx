@@ -95,7 +95,7 @@ const Board = ({ projectData }: Props) => {
 		}
 	};
 
-	const delTask = (id: any, columnId: any) => {
+	const delIssue = (id: any, columnId: any) => {
 		setBoardData((prevData: any) => {
 			const tasks = JSON.parse(JSON.stringify(prevData.tasks));
 
@@ -169,6 +169,37 @@ const Board = ({ projectData }: Props) => {
 		});
 	};
 
+	const addColumn = (title: string) => {
+		const newColumnId = uuidv4();
+
+		setBoardData((prevData: any) => {
+			const newColumn = {
+				id: newColumnId,
+				title: title,
+				taskIds: [],
+			};
+
+			const newColumns = {
+				...prevData.columns,
+				[newColumnId]: newColumn,
+			};
+
+			const newColumnOrder = [...prevData.columnOrder, newColumnId];
+
+			const newData = {
+				...prevData,
+				columns: newColumns,
+				columnOrder: newColumnOrder,
+			};
+
+			console.log(newData);
+
+			return newData;
+		});
+		// Create the column with no tasks
+		// Add to the end of the columnOrder
+	};
+
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
 			{/* TODO: add react hook form to this editable to save the user entered value, and update the state */}
@@ -178,11 +209,11 @@ const Board = ({ projectData }: Props) => {
 			</Editable>
 
 			<Droppable direction='horizontal' droppableId='all-columns' type='column'>
-				{(provided) => (
+				{(provided, snapshot) => (
 					<Grid
 						w='100%'
 						h='80%'
-						templateColumns={`repeat(${boardData.columnOrder.length + 1},max-content)`}
+						templateColumns={`repeat(${boardData.columnOrder.length + 3},min-content)`}
 						gap={4}
 						overflowX='auto'
 						overflowY='hidden'
@@ -203,7 +234,7 @@ const Board = ({ projectData }: Props) => {
 													key={task.id}
 													issue={task}
 													index={index}
-													delTask={delTask}
+													delTask={delIssue}
 													columnId={columnId}
 												/>
 											);
@@ -211,9 +242,9 @@ const Board = ({ projectData }: Props) => {
 									</Column>
 								);
 							})}
-
 							{provided.placeholder}
-							<AddColumn />
+
+							<AddColumn addColumn={addColumn} />
 						</>
 					</Grid>
 				)}

@@ -14,21 +14,20 @@ const Column = ({ column, children, index, addIssue }: Props) => {
 	return (
 		<div style={{ display: "inline-block" }}>
 			<Draggable draggableId={column.id} index={index}>
-				{(provided) => (
+				{(provided, snapshot) => (
 					<Box
 						rounded='xl'
-						bgColor='#F4F5F7'
+						bgColor={snapshot.isDragging ? "blue.200" : "#F4F5F7"}
 						w='100%'
 						minW='250px'
 						h='fit-content'
 						{...provided.draggableProps}
 						{...provided.dragHandleProps}
 						ref={provided.innerRef}>
-						<Flex py={3} px={4} justify='space-between' zIndex='999'>
-							<Editable defaultValue={column.title}>
-								<EditablePreview />
-								<EditableInput />
-							</Editable>
+						<Flex py={3} px={4} justify='space-between'>
+							<Text w='fit-content' opacity='0.7'>
+								{column.title}
+							</Text>
 							<Text w='fit-content' opacity='0.6'>
 								{column.taskIds.length}
 							</Text>

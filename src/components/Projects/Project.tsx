@@ -31,6 +31,7 @@ const Project = (props: Props) => {
 					</BreadcrumbLink>
 				</BreadcrumbItem>
 			</Breadcrumb>
+
 			<Board projectData={projectData} />
 		</Flex>
 	);

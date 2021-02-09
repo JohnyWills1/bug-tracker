@@ -4,20 +4,21 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
 
 interface Props {
-	// addColumn: (column: any) => void;
+	addColumn: (column: string) => void;
 }
 
 interface FormData {
-	content?: string;
+	content: string;
 }
 
-const AddColumn = (props: Props) => {
+const AddColumn = ({ addColumn }: Props) => {
 	const [isEditing, setEditing] = useState(false);
 
 	const { register, handleSubmit } = useForm();
 
-	const onSubmit = (data: FormData) => {
+	const onSubmit = ({ content }: FormData) => {
 		setEditing(!isEditing);
+		addColumn(content);
 	};
 
 	const handleUserKeyPress = (e: any) => {

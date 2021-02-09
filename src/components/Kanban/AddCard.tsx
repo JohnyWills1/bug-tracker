@@ -29,7 +29,7 @@ const AddCard = ({ addIssue, columnId }: Props) => {
 	};
 
 	return (
-		<Flex align='center' flexDirection='column' w='100%' px={2} pb={2}>
+		<Flex align='center' flexDirection='column' w='100%' mx={2} mb={2}>
 			{isEditing ? (
 				<form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
 					<Textarea
