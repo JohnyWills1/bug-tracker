@@ -4,11 +4,14 @@ import {
 	ModalOverlay,
 	ModalHeader,
 	ModalCloseButton,
-	Stack,
 	ModalContent,
 	ModalBody,
 	Text,
-	IconButton,
+	Button,
+	FormControl,
+	FormHelperText,
+	FormLabel,
+	ModalFooter,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 
@@ -32,15 +35,23 @@ const IssueModal = ({ isOpen, onClose, issue, delTask, columnId }: Props) => {
 				<ModalCloseButton />
 
 				<ModalBody>
-					<Stack isInline>
-						<IconButton
-							aria-label='delete issue button'
-							onClick={() => delTask(issue.id, columnId)}
-							icon={<DeleteIcon />}
-						/>
-					</Stack>
 					<Text>{issue.content}</Text>
 				</ModalBody>
+				<ModalFooter>
+					<FormControl id='deleteColumn'>
+						<FormLabel>Delete Issue</FormLabel>
+						<Button
+							leftIcon={<DeleteIcon />}
+							colorScheme='red'
+							onClick={() => {
+								onClose();
+								delTask(issue.id, columnId);
+							}}>
+							Delete Issue
+						</Button>
+						<FormHelperText>This cannot be undone</FormHelperText>
+					</FormControl>
+				</ModalFooter>
 			</ModalContent>
 		</Modal>
 	);

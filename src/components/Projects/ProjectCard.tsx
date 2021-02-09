@@ -1,5 +1,16 @@
 import { CloseIcon, StarIcon } from "@chakra-ui/icons";
-import { Box, Flex, IconButton } from "@chakra-ui/react";
+import {
+	AlertDialog,
+	AlertDialogBody,
+	AlertDialogContent,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogOverlay,
+	Box,
+	Button,
+	Flex,
+	IconButton,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import React from "react";
 
@@ -11,6 +22,10 @@ interface Props {
 }
 
 const ProjectCard = ({ project, addToStarred, removeFromStarred, deleteProject }: Props) => {
+	const [isOpen, setIsOpen] = React.useState(false);
+	const onClose = () => setIsOpen(false);
+	const cancelRef = React.useRef(null);
+
 	return (
 		<>
 			<Box
@@ -37,8 +52,34 @@ const ProjectCard = ({ project, addToStarred, removeFromStarred, deleteProject }
 							aria-label='delete project'
 							icon={<CloseIcon />}
 							size='xs'
-							onClick={() => deleteProject(project.id)}
+							onClick={() => setIsOpen(true)}
 						/>
+						<AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+							<AlertDialogOverlay>
+								<AlertDialogContent>
+									<AlertDialogHeader fontSize='lg' fontWeight='bold'>
+										Delete Project
+									</AlertDialogHeader>
+
+									<AlertDialogBody>Are you sure? You can't undo this action afterwards.</AlertDialogBody>
+
+									<AlertDialogFooter>
+										<Button ref={cancelRef} onClick={onClose}>
+											Cancel
+										</Button>
+										<Button
+											colorScheme='red'
+											onClick={() => {
+												onClose();
+												deleteProject(project.id);
+											}}
+											ml={3}>
+											Delete
+										</Button>
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialogOverlay>
+						</AlertDialog>
 					</Flex>
 					<Link to={"/projects/" + project.id} style={{ width: "100%", height: "100%" }}>
 						{/* Make this text black border, white inner as it can be read over any color */}

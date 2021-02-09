@@ -192,19 +192,78 @@ const Board = ({ projectData }: Props) => {
 				columnOrder: newColumnOrder,
 			};
 
-			console.log(newData);
+			return newData;
+		});
+	};
+
+	const changeProjectTitle = (newTitle: string) => {
+		setBoardData((prevData: any) => {
+			const newData = {
+				...prevData,
+				projectTitle: newTitle,
+			};
 
 			return newData;
 		});
-		// Create the column with no tasks
-		// Add to the end of the columnOrder
+	};
+
+	const changeColumnTitle = (newTitle: string, columnId: any) => {
+		const oldColumn = boardData.columns[columnId];
+
+		const newColumn = {
+			...oldColumn,
+			title: newTitle,
+		};
+
+		setBoardData((prevData: any) => {
+			const newColumns = {
+				...prevData.columns,
+				[columnId]: newColumn,
+			};
+
+			const newData = {
+				...prevData,
+				columns: newColumns,
+			};
+
+			return newData;
+		});
+	};
+
+	const deleteColumn = (columnId: any) => {
+		// Removed column from columns and from columnOrder
+		const columnsCopy = JSON.parse(JSON.stringify(boardData.columns));
+		let newColumns: any = {};
+
+		for (const key in columnsCopy) {
+			if (key !== columnId) {
+				newColumns[key] = columnsCopy[key];
+			}
+		}
+
+		setBoardData((prevData: any) => {
+			const newColumnOrder = prevData.columnOrder.filter((id: any) => id !== columnId);
+
+			const newData = {
+				...prevData,
+				columns: newColumns,
+				columnOrder: newColumnOrder,
+			};
+
+			return newData;
+		});
 	};
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
 			{/* TODO: add react hook form to this editable to save the user entered value, and update the state */}
-			<Editable defaultValue={boardData.projectTitle} textAlign='center' fontSize='3xl' mb={5}>
-				<EditablePreview />
+			<Editable
+				onSubmit={changeProjectTitle}
+				defaultValue={boardData.projectTitle}
+				textAlign='center'
+				fontSize='3xl'
+				mb={5}>
+				<EditablePreview w='100%' />
 				<EditableInput />
 			</Editable>
 
@@ -227,7 +286,13 @@ const Board = ({ projectData }: Props) => {
 								const tasks = column.taskIds.map((id: any) => boardData.tasks[id]);
 
 								return (
-									<Column key={column.id} index={index} column={column} addIssue={addIssue}>
+									<Column
+										key={column.id}
+										index={index}
+										column={column}
+										addIssue={addIssue}
+										deleteColumn={deleteColumn}
+										changeColumnTitle={changeColumnTitle}>
 										{tasks.map((task: any, index: any) => {
 											return (
 												<IssueCard

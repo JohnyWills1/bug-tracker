@@ -17,11 +17,12 @@ const ProjectsList = ({ projects, showAddNew, addToStarred, removeFromStarred, d
 			w='100%'
 			overflowX='auto'
 			p={4}
-			templateColumns={showAddNew ? `repeat(${projects.length + 1},min-content)` : `repeat(${projects.length},min-content)`}
+			templateColumns={showAddNew ? `repeat(${4},min-content)` : `repeat(${4},min-content)`}
 			gap={5}>
 			{projects.map((project: any) => {
 				return (
 					<ProjectCard
+						key={project.id}
 						project={project}
 						addToStarred={addToStarred}
 						removeFromStarred={removeFromStarred}
