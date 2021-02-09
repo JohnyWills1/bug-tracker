@@ -3,6 +3,7 @@ import { Flex, Heading } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ProjectsList from "./components/Projects/ProjectsList";
 import initialData from "./testdata";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {}
 
@@ -53,6 +54,25 @@ const Projects = (props: Props) => {
 		});
 	};
 
+	const createProject = (title: string) => {
+		const newProjectId = uuidv4();
+
+		setProjects((prevData: any) => {
+			const newProject = {
+				id: newProjectId,
+				projectTitle: title,
+				columns: {},
+				tasks: {},
+				columnOrder: [],
+				starred: false,
+			};
+
+			const newData = [...prevData, newProject];
+
+			return newData;
+		});
+	};
+
 	return (
 		<Flex px={5} py={6} flexDirection='column' minH='90vh' h='auto'>
 			{/* <Heading bgClip='text' textAlign='center' w='50%' bgGradient='linear(to-r, #660708,#ba181b,#e5383b)' mb={6}>
@@ -82,6 +102,7 @@ const Projects = (props: Props) => {
 			<ProjectsList
 				projects={projects}
 				showAddNew={true}
+				createProject={createProject}
 				addToStarred={addToStarred}
 				removeFromStarred={removeFromStarred}
 				deleteProject={deleteProject}

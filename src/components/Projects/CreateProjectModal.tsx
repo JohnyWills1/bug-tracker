@@ -10,30 +10,47 @@ import {
 	Button,
 } from "@chakra-ui/react";
 import React from "react";
+import { useForm } from "react-hook-form";
 
 interface Props {
 	isOpen: boolean;
 	onClose: () => void;
+	createProject?: (title: string) => void;
 }
 
-const CreateProjectModal = ({ isOpen, onClose }: Props) => {
+interface FormData {
+	title: string;
+}
+
+const CreateProjectModal = ({ isOpen, onClose, createProject }: Props) => {
+	const { register, handleSubmit } = useForm();
+
+	const onSubmit = ({ title }: FormData) => {
+		if (createProject !== undefined) {
+			createProject(title);
+			onClose();
+		}
+	};
+
 	return (
 		<>
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 				<ModalContent>
-					<form>
+					<form onSubmit={handleSubmit(onSubmit)}>
 						<ModalHeader>New Project</ModalHeader>
 						<ModalCloseButton />
 						<ModalBody>
-							<Input placeholder='Project Title' />
+							<Input placeholder='Project Title' name='title' ref={register({ required: true })} />
 						</ModalBody>
 
 						<ModalFooter>
 							<Button colorScheme='blue' mr={3} onClick={onClose}>
 								Close
 							</Button>
-							<Button colorScheme='green'>Create Project</Button>
+							<Button colorScheme='green' type='submit'>
+								Create Project
+							</Button>
 						</ModalFooter>
 					</form>
 				</ModalContent>

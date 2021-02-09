@@ -2,9 +2,11 @@ import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import CreateProjectModal from "./CreateProjectModal";
 
-interface Props {}
+interface Props {
+	createProject?: (title: string) => void;
+}
 
-const CreateProject = (props: Props) => {
+const CreateProject = ({ createProject }: Props) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	return (
@@ -22,7 +24,7 @@ const CreateProject = (props: Props) => {
 				</Flex>
 			</Box>
 
-			<CreateProjectModal isOpen={isOpen} onClose={onClose} />
+			<CreateProjectModal isOpen={isOpen} onClose={onClose} createProject={createProject} />
 		</>
 	);
 };

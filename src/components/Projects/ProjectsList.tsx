@@ -9,15 +9,22 @@ interface Props {
 	addToStarred: (projectId: string) => void;
 	deleteProject: (projectId: string) => void;
 	removeFromStarred: (projectId: string) => void;
+	createProject?: (title: string) => void;
 }
 
-const ProjectsList = ({ projects, showAddNew, addToStarred, removeFromStarred, deleteProject }: Props) => {
+const ProjectsList = ({ projects, showAddNew, addToStarred, removeFromStarred, deleteProject, createProject }: Props) => {
 	return (
 		<Grid
 			w='100%'
 			overflowX='auto'
 			p={4}
-			templateColumns={showAddNew ? `repeat(${4},min-content)` : `repeat(${4},min-content)`}
+			templateColumns={[
+				`repeat(1,min-content)`,
+				`repeat(2,min-content)`,
+				`repeat(3,min-content)`,
+				`repeat(4,min-content)`,
+				`repeat(5,min-content)`,
+			]}
 			gap={5}>
 			{projects.map((project: any) => {
 				return (
@@ -30,7 +37,7 @@ const ProjectsList = ({ projects, showAddNew, addToStarred, removeFromStarred, d
 					/>
 				);
 			})}
-			{showAddNew && <CreateProject />}
+			{showAddNew && <CreateProject createProject={createProject} />}
 		</Grid>
 	);
 };
