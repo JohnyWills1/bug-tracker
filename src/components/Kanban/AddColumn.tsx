@@ -28,7 +28,7 @@ const AddColumn = ({ addColumn }: Props) => {
 	};
 
 	return (
-		<Flex align='center' flexDirection='column' w='100%'>
+		<Flex align='center' flexDirection='column'>
 			{isEditing ? (
 				<form onSubmit={handleSubmit(onSubmit)} style={{ width: "250px" }}>
 					<Box rounded='md' bg='#F4F5F7' p={2}>

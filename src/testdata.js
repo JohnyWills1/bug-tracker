@@ -1,46 +1,50 @@
 const initialData = [
 	{
 		id: "project-1",
-		tasks: {
-			"task-1": { id: "task-1", content: "Take out the garbage" },
-			"task-2": { id: "task-2", content: "Get money" },
-			"task-3": { id: "task-3", content: "Destroy a hedge fund" },
-			"task-4": { id: "task-4", content: "Stonks" },
-			"task-5": { id: "task-5", content: "Shower" },
-			"task-6": { id: "task-6", content: "Go running" },
-			"task-7": { id: "task-7", content: "Eat lots" },
-			"task-8": { id: "task-8", content: "Have a good conversation!" },
+		issues: {
+			"issue-1": {
+				id: "issue-1",
+				title: "Take out the garbage",
+				description: "Make sure to take out the black, green and blue bins",
+			},
+			"issue-2": { id: "issue-2", title: "Get money" },
+			"issue-3": { id: "issue-3", title: "Destroy a hedge fund" },
+			"issue-4": { id: "issue-4", title: "Stonks" },
+			"issue-5": { id: "issue-5", title: "Shower" },
+			"issue-6": { id: "issue-6", title: "Go running" },
+			"issue-7": { id: "issue-7", title: "Eat lots" },
+			"issue-8": { id: "issue-8", title: "Have a good conversation!" },
 		},
 		columns: {
 			"column-1": {
 				id: "column-1",
 				title: "To Do",
-				taskIds: ["task-1", "task-2", "task-3"],
+				issueIds: ["issue-1", "issue-2", "issue-3"],
 			},
 			"column-2": {
 				id: "column-2",
 				title: "In Development",
-				taskIds: ["task-5"],
+				issueIds: ["issue-5"],
 			},
 			"column-3": {
 				id: "column-3",
 				title: "Backlog",
-				taskIds: ["task-7"],
+				issueIds: ["issue-7"],
 			},
 			"column-4": {
 				id: "column-4",
 				title: "Done",
-				taskIds: ["task-8"],
+				issueIds: ["issue-8"],
 			},
 			"column-5": {
 				id: "column-5",
 				title: "Test 1",
-				taskIds: ["task-6"],
+				issueIds: ["issue-6"],
 			},
 			"column-6": {
 				id: "column-6",
 				title: "Test 2",
-				taskIds: ["task-4"],
+				issueIds: ["issue-4"],
 			},
 		},
 		columnOrder: ["column-1", "column-2", "column-3", "column-4", "column-5", "column-6"],
@@ -50,28 +54,28 @@ const initialData = [
 	},
 	{
 		id: "project-2",
-		tasks: {
-			"task-1": { id: "task-1", content: "Take out the garbage" },
-			"task-2": { id: "task-2", content: "Get money" },
-			"task-3": { id: "task-3", content: "Destroy a hedge fund" },
-			"task-4": { id: "task-4", content: "Stonks" },
-			"task-5": { id: "task-5", content: "Shower" },
+		issues: {
+			"issue-1": { id: "issue-1", title: "Take out the garbage" },
+			"issue-2": { id: "issue-2", title: "Get money" },
+			"issue-3": { id: "issue-3", title: "Destroy a hedge fund" },
+			"issue-4": { id: "issue-4", title: "Stonks" },
+			"issue-5": { id: "issue-5", title: "Shower" },
 		},
 		columns: {
 			"column-1": {
 				id: "column-1",
 				title: "To Do",
-				taskIds: ["task-1", "task-2", "task-3"],
+				issueIds: ["issue-1", "issue-2", "issue-3"],
 			},
 			"column-2": {
 				id: "column-2",
 				title: "In Development",
-				taskIds: ["task-4"],
+				issueIds: ["issue-4"],
 			},
 			"column-3": {
 				id: "column-3",
 				title: "Backlog",
-				taskIds: ["task-5"],
+				issueIds: ["issue-5"],
 			},
 		},
 		columnOrder: ["column-1", "column-2", "column-3"],
@@ -80,28 +84,28 @@ const initialData = [
 	},
 	{
 		id: "project-3",
-		tasks: {
-			"task-1": { id: "task-1", content: "Take out the garbage" },
-			"task-2": { id: "task-2", content: "Get money" },
-			"task-3": { id: "task-3", content: "Destroy a hedge fund" },
-			"task-4": { id: "task-4", content: "Stonks" },
-			"task-5": { id: "task-5", content: "Shower" },
+		issues: {
+			"issue-1": { id: "issue-1", title: "Take out the garbage" },
+			"issue-2": { id: "issue-2", title: "Get money" },
+			"issue-3": { id: "issue-3", title: "Destroy a hedge fund" },
+			"issue-4": { id: "issue-4", title: "Stonks" },
+			"issue-5": { id: "issue-5", title: "Shower" },
 		},
 		columns: {
 			"column-1": {
 				id: "column-1",
 				title: "To Do",
-				taskIds: ["task-1", "task-2", "task-3"],
+				issueIds: ["issue-1", "issue-2", "issue-3"],
 			},
 			"column-2": {
 				id: "column-2",
 				title: "In Development",
-				taskIds: ["task-4"],
+				issueIds: ["issue-4"],
 			},
 			"column-3": {
 				id: "column-3",
 				title: "Backlog",
-				taskIds: ["task-5"],
+				issueIds: ["issue-5"],
 			},
 		},
 		columnOrder: ["column-1", "column-2", "column-3"],
@@ -111,28 +115,28 @@ const initialData = [
 
 	{
 		id: "project-4",
-		tasks: {
-			"task-1": { id: "task-1", content: "Take out the garbage" },
-			"task-2": { id: "task-2", content: "Get money" },
-			"task-3": { id: "task-3", content: "Destroy a hedge fund" },
-			"task-4": { id: "task-4", content: "Stonks" },
-			"task-5": { id: "task-5", content: "Shower" },
+		issues: {
+			"issue-1": { id: "issue-1", title: "Take out the garbage" },
+			"issue-2": { id: "issue-2", title: "Get money" },
+			"issue-3": { id: "issue-3", title: "Destroy a hedge fund" },
+			"issue-4": { id: "issue-4", title: "Stonks" },
+			"issue-5": { id: "issue-5", title: "Shower" },
 		},
 		columns: {
 			"column-1": {
 				id: "column-1",
 				title: "To Do",
-				taskIds: ["task-1", "task-2", "task-3"],
+				issueIds: ["issue-1", "issue-2", "issue-3"],
 			},
 			"column-2": {
 				id: "column-2",
 				title: "In Development",
-				taskIds: ["task-4"],
+				issueIds: ["issue-4"],
 			},
 			"column-3": {
 				id: "column-3",
 				title: "Backlog",
-				taskIds: ["task-5"],
+				issueIds: ["issue-5"],
 			},
 		},
 		columnOrder: ["column-1", "column-2", "column-3"],
@@ -142,28 +146,28 @@ const initialData = [
 
 	{
 		id: "project-5",
-		tasks: {
-			"task-1": { id: "task-1", content: "Take out the garbage" },
-			"task-2": { id: "task-2", content: "Get money" },
-			"task-3": { id: "task-3", content: "Destroy a hedge fund" },
-			"task-4": { id: "task-4", content: "Stonks" },
-			"task-5": { id: "task-5", content: "Shower" },
+		issues: {
+			"issue-1": { id: "issue-1", title: "Take out the garbage" },
+			"issue-2": { id: "issue-2", title: "Get money" },
+			"issue-3": { id: "issue-3", title: "Destroy a hedge fund" },
+			"issue-4": { id: "issue-4", title: "Stonks" },
+			"issue-5": { id: "issue-5", title: "Shower" },
 		},
 		columns: {
 			"column-1": {
 				id: "column-1",
 				title: "To Do",
-				taskIds: ["task-1", "task-2", "task-3"],
+				issueIds: ["issue-1", "issue-2", "issue-3"],
 			},
 			"column-2": {
 				id: "column-2",
 				title: "In Development",
-				taskIds: ["task-4"],
+				issueIds: ["issue-4"],
 			},
 			"column-3": {
 				id: "column-3",
 				title: "Backlog",
-				taskIds: ["task-5"],
+				issueIds: ["issue-5"],
 			},
 		},
 		columnOrder: ["column-1", "column-2", "column-3"],

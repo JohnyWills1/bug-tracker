@@ -62,7 +62,7 @@ const Projects = (props: Props) => {
 				id: newProjectId,
 				projectTitle: title,
 				columns: {},
-				tasks: {},
+				issues: {},
 				columnOrder: [],
 				starred: false,
 			};

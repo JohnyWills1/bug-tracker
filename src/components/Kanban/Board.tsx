@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, EditablePreview, EditableInput, Editable } from "@chakra-ui/react";
+import { EditablePreview, EditableInput, Editable, Flex } from "@chakra-ui/react";
 import Column from "./Column";
 import IssueCard from "./IssueCard";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
@@ -44,13 +44,13 @@ const Board = ({ projectData }: Props) => {
 		const finishColumn = boardData.columns[destination.droppableId];
 
 		if (startColumn === finishColumn) {
-			let newTaskIds = Array.from(startColumn.taskIds);
-			newTaskIds.splice(source.index, 1);
-			newTaskIds.splice(destination.index, 0, draggableId);
+			let newIssueIds = Array.from(startColumn.issueIds);
+			newIssueIds.splice(source.index, 1);
+			newIssueIds.splice(destination.index, 0, draggableId);
 
 			const newColumn = {
 				...startColumn,
-				taskIds: newTaskIds,
+				issueIds: newIssueIds,
 			};
 
 			setBoardData((prevData: any) => {
@@ -65,20 +65,20 @@ const Board = ({ projectData }: Props) => {
 				return newData;
 			});
 		} else {
-			let startTaskIds = Array.from(startColumn.taskIds);
-			startTaskIds.splice(source.index, 1);
+			let startIssueIds = Array.from(startColumn.issueIds);
+			startIssueIds.splice(source.index, 1);
 
 			const newStartColumn = {
 				...startColumn,
-				taskIds: startTaskIds,
+				issueIds: startIssueIds,
 			};
 
-			let finishTaskIds = Array.from(finishColumn.taskIds);
-			finishTaskIds.splice(destination.index, 0, draggableId);
+			let finishIssueIds = Array.from(finishColumn.issueIds);
+			finishIssueIds.splice(destination.index, 0, draggableId);
 
 			const newFinishColumn = {
 				...finishColumn,
-				taskIds: finishTaskIds,
+				issueIds: finishIssueIds,
 			};
 
 			setBoardData((prevData: any) => {
@@ -97,23 +97,23 @@ const Board = ({ projectData }: Props) => {
 
 	const delIssue = (id: any, columnId: any) => {
 		setBoardData((prevData: any) => {
-			const tasks = JSON.parse(JSON.stringify(prevData.tasks));
+			const issues = JSON.parse(JSON.stringify(prevData.issues));
 
-			let newTasks: any = {};
+			let newIssues: any = {};
 
-			for (const key in tasks) {
+			for (const key in issues) {
 				if (key !== id) {
-					newTasks[key] = tasks[key];
+					newIssues[key] = issues[key];
 				}
 			}
 
-			const newTaskIds = prevData.columns[columnId].taskIds.filter((taskId: any) => {
-				return taskId !== id;
+			const newissueIds = prevData.columns[columnId].issueIds.filter((issueId: any) => {
+				return issueId !== id;
 			});
 
 			const newColumn = {
 				...prevData.columns[columnId],
-				taskIds: newTaskIds,
+				issueIds: newissueIds,
 			};
 
 			const newColumns = {
@@ -124,7 +124,7 @@ const Board = ({ projectData }: Props) => {
 			const newData = {
 				...prevData,
 				columns: newColumns,
-				tasks: newTasks,
+				issues: newIssues,
 			};
 
 			return newData;
@@ -133,25 +133,25 @@ const Board = ({ projectData }: Props) => {
 
 	const addIssue = (issue: any, columnId: any) => {
 		setBoardData((prevData: any) => {
-			const newTaskId = uuidv4();
+			const newIssueId = uuidv4();
 
-			const newTask = {
-				id: newTaskId,
-				content: issue,
+			const newIssue = {
+				id: newIssueId,
+				title: issue,
 			};
 
-			const newTasks = {
-				...prevData.tasks,
-				[newTaskId]: newTask,
+			const newIssues = {
+				...prevData.issues,
+				[newIssueId]: newIssue,
 			};
 
 			const oldColumn = prevData.columns[columnId];
-			let newTaskIds: any = Array.from(prevData.columns[columnId].taskIds);
-			newTaskIds.push(newTaskId);
+			let newIssueIds: any = Array.from(prevData.columns[columnId].issueIds);
+			newIssueIds.push(newIssueId);
 
 			const newColumn = {
 				...oldColumn,
-				taskIds: newTaskIds,
+				issueIds: newIssueIds,
 			};
 
 			const newColumns = {
@@ -161,7 +161,7 @@ const Board = ({ projectData }: Props) => {
 
 			const newData = {
 				...prevData,
-				tasks: newTasks,
+				issues: newIssues,
 				columns: newColumns,
 			};
 
@@ -176,7 +176,7 @@ const Board = ({ projectData }: Props) => {
 			const newColumn = {
 				id: newColumnId,
 				title: title,
-				taskIds: [],
+				issueIds: [],
 			};
 
 			const newColumns = {
@@ -269,49 +269,45 @@ const Board = ({ projectData }: Props) => {
 
 			<Droppable direction='horizontal' droppableId='all-columns' type='column'>
 				{(provided, snapshot) => (
-					<Grid
+					<Flex
 						w='100%'
 						h='80%'
-						templateColumns={`repeat(${boardData.columnOrder.length + 3},min-content)`}
-						gap={4}
 						overflowX='auto'
 						overflowY='hidden'
 						pb={4}
 						{...provided.droppableProps}
 						ref={provided.innerRef}>
-						<>
-							{boardData.columnOrder.map((columnId: string, index: any) => {
-								const column = boardData.columns[columnId];
+						{boardData.columnOrder.map((columnId: string, index: any) => {
+							const column = boardData.columns[columnId];
 
-								const tasks = column.taskIds.map((id: any) => boardData.tasks[id]);
+							const issues = column.issueIds.map((id: any) => boardData.issues[id]);
 
-								return (
-									<Column
-										key={column.id}
-										index={index}
-										column={column}
-										addIssue={addIssue}
-										deleteColumn={deleteColumn}
-										changeColumnTitle={changeColumnTitle}>
-										{tasks.map((task: any, index: any) => {
-											return (
-												<IssueCard
-													key={task.id}
-													issue={task}
-													index={index}
-													delTask={delIssue}
-													columnId={columnId}
-												/>
-											);
-										})}
-									</Column>
-								);
-							})}
-							{provided.placeholder}
+							return (
+								<Column
+									key={column.id}
+									index={index}
+									column={column}
+									addIssue={addIssue}
+									deleteColumn={deleteColumn}
+									changeColumnTitle={changeColumnTitle}>
+									{issues.map((issue: any, index: any) => {
+										return (
+											<IssueCard
+												key={issue.id}
+												issue={issue}
+												index={index}
+												delIssue={delIssue}
+												columnId={columnId}
+											/>
+										);
+									})}
+								</Column>
+							);
+						})}
+						{provided.placeholder}
 
-							<AddColumn addColumn={addColumn} />
-						</>
-					</Grid>
+						<AddColumn addColumn={addColumn} />
+					</Flex>
 				)}
 			</Droppable>
 		</DragDropContext>

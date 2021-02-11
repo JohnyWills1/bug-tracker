@@ -15,24 +15,28 @@ interface FormData {
 const AddCard = ({ addIssue, columnId }: Props) => {
 	const [isEditing, setEditing] = useState(false);
 
-	const { register, handleSubmit } = useForm();
+	const { register, handleSubmit, setValue } = useForm();
 
 	const onSubmit = (data: FormData) => {
-		setEditing(!isEditing);
 		addIssue(data.content, columnId);
+		setValue("content", "");
 	};
 
 	const handleUserKeyPress = (e: any) => {
 		if (e.key === "Enter" && !e.shiftKey) {
+			e.preventDefault();
 			handleSubmit(onSubmit)();
+			e.target.value = "";
+			e.target.focus();
 		}
 	};
 
 	return (
-		<Flex align='center' flexDirection='column' w='100%' mx={2} mb={2}>
+		<Flex align='center' flexDirection='column' w='100%' mx={2} mb={2} onBlur={(e) => console.log("blur")}>
 			{isEditing ? (
 				<form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
 					<Textarea
+						autoFocus={true}
 						placeholder='Enter a title for this card'
 						bgColor='white'
 						border='none'

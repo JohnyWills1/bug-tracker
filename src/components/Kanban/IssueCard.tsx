@@ -6,14 +6,15 @@ import IssueModal from "./IssueModal";
 interface Props {
 	issue: {
 		id: string;
-		content?: string;
+		title: string;
+		description?: string;
 	};
 	index: any;
-	delTask: (id: any, columnId: any) => void;
+	delIssue: (id: any, columnId: any) => void;
 	columnId: any;
 }
 
-const IssueCard = ({ issue, index, delTask, columnId }: Props) => {
+const IssueCard = ({ issue, index, delIssue, columnId }: Props) => {
 	// * ChakraUI
 	// Modal hooks
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,7 +38,7 @@ const IssueCard = ({ issue, index, delTask, columnId }: Props) => {
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}>
 					<Flex flexDirection='column' h='100%' justify='space-between'>
-						<Text>{issue.content}</Text>
+						<Text>{issue.title}</Text>
 						{/* <Flex justify='space-between' align='center'>
 					<Stack gap={2} display='flex' align='center' isInline>
 						<Text>{issue.issuePriority}</Text>
@@ -48,7 +49,7 @@ const IssueCard = ({ issue, index, delTask, columnId }: Props) => {
 					</Flex>
 
 					{isOpen && (
-						<IssueModal isOpen={isOpen} onClose={onClose} issue={issue} delTask={delTask} columnId={columnId} />
+						<IssueModal isOpen={isOpen} onClose={onClose} issue={issue} delIssue={delIssue} columnId={columnId} />
 					)}
 				</Box>
 			)}

@@ -103,7 +103,7 @@ const Column = ({ column, children, index, addIssue, changeColumnTitle, deleteCo
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	return (
-		<div style={{ display: "inline-block" }}>
+		<div style={{ display: "inline-block", marginRight: "10px" }}>
 			<Draggable draggableId={column.id} index={index}>
 				{(provided, snapshot) => (
 					<Box
@@ -134,14 +134,10 @@ const Column = ({ column, children, index, addIssue, changeColumnTitle, deleteCo
 								onClose={onClose}
 								changeColumnTitle={changeColumnTitle}
 							/>
-
-							{/* <Text w='fit-content' opacity='0.6'>
-								{column.taskIds.length}
-							</Text> */}
 						</Flex>
 
 						<Flex w='100%' align='flex-start' borderBottom='1px solid #d8dce3'></Flex>
-						<Droppable droppableId={column.id} type='task' direction='vertical'>
+						<Droppable droppableId={column.id} type='issue' direction='vertical'>
 							{(provided, snapshot) => (
 								<Flex
 									justify='flex-start'

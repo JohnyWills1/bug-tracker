@@ -20,13 +20,14 @@ interface Props {
 	onClose: () => void;
 	issue: {
 		id: string;
-		content?: string;
+		title: string;
+		description?: string;
 	};
 	columnId: any;
-	delTask: (id: any, columnId: any) => void;
+	delIssue: (id: any, columnId: any) => void;
 }
 
-const IssueModal = ({ isOpen, onClose, issue, delTask, columnId }: Props) => {
+const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId }: Props) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
@@ -35,8 +36,9 @@ const IssueModal = ({ isOpen, onClose, issue, delTask, columnId }: Props) => {
 				<ModalCloseButton />
 
 				<ModalBody>
-					<Text>{issue.content}</Text>
+					<Text>Content: {issue.description}</Text>
 				</ModalBody>
+
 				<ModalFooter>
 					<FormControl id='deleteColumn'>
 						<FormLabel>Delete Issue</FormLabel>
@@ -45,7 +47,7 @@ const IssueModal = ({ isOpen, onClose, issue, delTask, columnId }: Props) => {
 							colorScheme='red'
 							onClick={() => {
 								onClose();
-								delTask(issue.id, columnId);
+								delIssue(issue.id, columnId);
 							}}>
 							Delete Issue
 						</Button>
