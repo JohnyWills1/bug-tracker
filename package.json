@@ -19,13 +19,17 @@
     "firebase": "^8.2.3",
     "framer-motion": "^3.1.3",
     "hookrouter": "^1.2.5",
+    "quill": "^1.3.7",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.14.1",
     "react-icons": "^4.1.0",
+    "react-quill": "^1.3.5",
+    "react-quilljs": "^1.2.13",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "styled-components": "^5.2.1",
     "typescript": "^4.0.3",
     "uuid": "^8.3.2",
     "web-vitals": "^0.2.4"
@@ -55,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@types/quill": "^2.0.5",
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-router-dom": "^5.1.7"
   }

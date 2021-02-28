@@ -4,11 +4,32 @@ const initialData = [
 		issues: {
 			"issue-1": {
 				id: "issue-1",
+				type: "issue", //Issue, Bug, Story
 				title: "Take out the garbage",
 				description: "Make sure to take out the black, green and blue bins",
+				priority: "High", //Lowest, Low, Medium, High, Highest
+				comments: [
+					{
+						id: "comment-1",
+						content: "this is a good idea!",
+						datePosted: "11/02/2020",
+						user: "Lord Gaben",
+					},
+					{
+						id: "comment-2",
+						content: "when can you get this finished by?",
+						datePosted: "10/02/2020",
+						user: "Pickle Rick",
+					},
+				],
+				assignees: ["Lord Gaben", "Pickle Rick", "Johny Wills"],
+				reporter: "Lord Gaben",
+				timeEstimate: 123,
+				dateCreated: "18/02/2020",
+				dateUpdated: "19/02/2020",
 			},
-			"issue-2": { id: "issue-2", title: "Get money" },
-			"issue-3": { id: "issue-3", title: "Destroy a hedge fund" },
+			"issue-2": { id: "issue-2", type: "bug", title: "Get money" },
+			"issue-3": { id: "issue-3", type: "story", title: "Destroy a hedge fund" },
 			"issue-4": { id: "issue-4", title: "Stonks" },
 			"issue-5": { id: "issue-5", title: "Shower" },
 			"issue-6": { id: "issue-6", title: "Go running" },

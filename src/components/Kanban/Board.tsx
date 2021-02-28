@@ -271,7 +271,7 @@ const Board = ({ projectData }: Props) => {
 				{(provided, snapshot) => (
 					<Flex
 						w='100%'
-						h='80%'
+						h='75vh'
 						overflowX='auto'
 						overflowY='hidden'
 						pb={4}
@@ -293,6 +293,7 @@ const Board = ({ projectData }: Props) => {
 									{issues.map((issue: any, index: any) => {
 										return (
 											<IssueCard
+												columns={boardData.columns}
 												key={issue.id}
 												issue={issue}
 												index={index}

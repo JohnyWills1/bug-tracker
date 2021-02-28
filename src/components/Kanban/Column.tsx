@@ -18,6 +18,12 @@ import {
 	FormLabel,
 	FormHelperText,
 	Stack,
+	AlertDialog,
+	AlertDialogBody,
+	AlertDialogContent,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogOverlay,
 } from "@chakra-ui/react";
 import React from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
@@ -48,10 +54,16 @@ interface FormData {
 const EditColumn = ({ isOpen, onClose, column, changeColumnTitle, deleteColumn }: EditColumnProps) => {
 	const { register, handleSubmit } = useForm();
 	const initialRef = React.useRef(null);
+	const [alertOpen, setAlertOpen] = React.useState(false);
+	const cancelRef = React.useRef(null);
 
 	const onSubmit = ({ newTitle }: FormData) => {
 		changeColumnTitle(newTitle, column.id);
 		onClose();
+	};
+
+	const onAlertClose = () => {
+		setAlertOpen(false);
 	};
 
 	return (
@@ -75,11 +87,39 @@ const EditColumn = ({ isOpen, onClose, column, changeColumnTitle, deleteColumn }
 									leftIcon={<DeleteIcon />}
 									colorScheme='red'
 									onClick={() => {
-										onClose();
-										deleteColumn(column.id);
+										setAlertOpen(true);
 									}}>
 									Delete Column
 								</Button>
+								<AlertDialog isOpen={alertOpen} leastDestructiveRef={cancelRef} onClose={onAlertClose}>
+									<AlertDialogOverlay>
+										<AlertDialogContent>
+											<AlertDialogHeader fontSize='lg' fontWeight='bold'>
+												Delete Column
+											</AlertDialogHeader>
+
+											<AlertDialogBody>
+												Are you sure? You can't undo this action afterwards. All issues contained in this
+												column will be lost.
+											</AlertDialogBody>
+
+											<AlertDialogFooter>
+												<Button ref={cancelRef} onClick={onAlertClose}>
+													Cancel
+												</Button>
+												<Button
+													colorScheme='red'
+													onClick={() => {
+														onClose();
+														deleteColumn(column.id);
+													}}
+													ml={3}>
+													Delete
+												</Button>
+											</AlertDialogFooter>
+										</AlertDialogContent>
+									</AlertDialogOverlay>
+								</AlertDialog>
 								<FormHelperText>This cannot be undone</FormHelperText>
 							</FormControl>
 						</Stack>
@@ -108,14 +148,14 @@ const Column = ({ column, children, index, addIssue, changeColumnTitle, deleteCo
 				{(provided, snapshot) => (
 					<Box
 						rounded='md'
-						bgColor={snapshot.isDragging ? "blue.200" : "#F4F5F7"}
+						bgColor='#F4F5F7'
 						w='100%'
 						minW='250px'
 						h='fit-content'
+						minH={snapshot.isDragging ? "fit-content" : "100%"}
 						{...provided.draggableProps}
-						{...provided.dragHandleProps}
 						ref={provided.innerRef}>
-						<Flex py={3} px={4} justify='space-between' align='center'>
+						<Flex py={3} px={4} justify='space-between' align='center' {...provided.dragHandleProps}>
 							<Text w='fit-content' opacity='0.8'>
 								{column.title}
 							</Text>
@@ -137,23 +177,24 @@ const Column = ({ column, children, index, addIssue, changeColumnTitle, deleteCo
 						</Flex>
 
 						<Flex w='100%' align='flex-start' borderBottom='1px solid #d8dce3'></Flex>
+
 						<Droppable droppableId={column.id} type='issue' direction='vertical'>
 							{(provided, snapshot) => (
 								<Flex
-									justify='flex-start'
 									py={4}
 									px={6}
+									w='100%'
+									minH='650px'
 									align='center'
-									h='100%'
 									rounded='xl'
 									borderTopLeftRadius='0'
 									borderTopRadius='0'
-									bg={snapshot.isDraggingOver ? "blue.300" : "none"}
 									flexDirection='column'
 									ref={provided.innerRef}
 									{...provided.droppableProps}>
 									{children}
 									{provided.placeholder}
+
 									<AddCard addIssue={addIssue} columnId={column.id} />
 								</Flex>
 							)}

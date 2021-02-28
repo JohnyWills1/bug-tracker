@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import initialData from "../../testdata";
 import Board from "../Kanban/Board";
 import PageNotFound from "../../PageNotFound";
+import Sidebar from "./Sidebar";
 
 interface Props {}
 
@@ -20,7 +21,8 @@ const Project = (props: Props) => {
 	}
 
 	return (
-		<Flex align='center' px={5} py={6} flexDirection='column' minH='90vh' h='auto'>
+		<Flex align='center' px={5} py={6} ml='50px' flexDirection='column' minH='90vh' h='auto'>
+			<Sidebar />
 			<Breadcrumb pb={2}>
 				<BreadcrumbItem>
 					<BreadcrumbLink href='/projects'>Projects</BreadcrumbLink>

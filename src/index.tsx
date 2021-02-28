@@ -12,22 +12,27 @@ import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import Project from "./components/Projects/Project";
 import PageNotFound from "./PageNotFound";
+import Loading from "./Loading";
+import IssueModal from "./components/Kanban/IssueModal";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Router>
 			<AuthProvider>
 				<ChakraProvider>
-					<Navbar />
-					<Switch>
-						<Route exact path='/' component={Home} />
-						<PrivateRoute exact path='/projects' component={Projects} />
-						<PrivateRoute exact path='/projects/:id' component={Project} />
-						<PrivateRoute exact path='/update-profile' component={UpdateProfile} />
-						<Route exact path='/forgot-password' component={ForgotPassword} />
-						<Route component={PageNotFound} />
-					</Switch>
-					<Footer />
+					<Loading>
+						<Navbar />
+						<Switch>
+							<Route exact path='/' component={Home} />
+							<PrivateRoute exact path='/projects' component={Projects} />
+							<PrivateRoute exact path='/projects/:id' component={Project} />
+							<PrivateRoute exact path='/update-profile' component={UpdateProfile} />
+							<Route path='/projects/:id/:issueId' component={IssueModal} />
+							<Route exact path='/forgot-password' component={ForgotPassword} />
+							<Route component={PageNotFound} />
+						</Switch>
+						<Footer />
+					</Loading>
 				</ChakraProvider>
 			</AuthProvider>
 		</Router>

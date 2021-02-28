@@ -35,7 +35,7 @@ const Navbar = (props: Props) => {
 	return (
 		<>
 			<Box w='100%'>
-				<Flex justify='space-between' align='center' py={1} px={4} my={2} mx={4}>
+				<Flex justify='space-between' align='center' py={1} px={4} my={2} mx='50px'>
 					<Text
 						bgGradient='linear(to-r, #dc2f02, #e85d04 , #faa307)'
 						bgClip='text'
