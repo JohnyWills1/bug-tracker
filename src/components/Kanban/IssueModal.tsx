@@ -37,6 +37,7 @@ import IssueComments from "./IssueComments";
 // Quill Imports (inc CSS)
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
+import Editor from "../../shared/Editor";
 
 interface Props {
 	isOpen: boolean;
@@ -99,6 +100,14 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 		console.table(columns[e.target.value]);
 	};
 
+	const changeEditorBool = (arg0: boolean) => {
+		setEditDesc(arg0);
+	};
+
+	const changeDesc = (newDesc: string) => {
+		console.log(newDesc);
+	};
+
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} autoFocus={false} isCentered={true} size='5xl'>
 			<ModalOverlay />
@@ -138,7 +147,11 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 				<ModalBody p='0 24px 50px'>
 					<Flex w='100%' h='fit-content' justify='space-between'>
 						<Flex pr='50px' flexDirection='column' w='65%'>
-							<Editable onSubmit={(data) => changeIssueTitle(data)} defaultValue={issue.title} rounded='md'>
+							<Editable
+								onSubmit={(data) => changeIssueTitle(data)}
+								defaultValue={issue.title}
+								selectAllOnFocus={false}
+								rounded='md'>
 								<EditablePreview
 									overflowY='hidden'
 									w='100%'
@@ -160,17 +173,11 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 								{issue.description && issue.description.length ? (
 									<>
 										{editDesc ? (
-											<Flex flexDirection='column'>
-												<ReactQuill value={issue.description} />
-												<Stack pt='10px' isInline>
-													<Button colorScheme='blue' size='sm'>
-														Save
-													</Button>
-													<Button size='sm' onClick={() => setEditDesc(false)}>
-														Cancel
-													</Button>
-												</Stack>
-											</Flex>
+											<Editor
+												initialValue={issue.description}
+												closeEditor={changeEditorBool}
+												saveChanges={changeDesc}
+											/>
 										) : (
 											<Box
 												w='100%'
