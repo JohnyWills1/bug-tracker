@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Chakra UI
 import {
@@ -26,18 +26,14 @@ import {
 	Tag,
 	TagLabel,
 	Avatar,
-	keyframes,
 	Select,
 } from "@chakra-ui/react";
-import { CloseIcon, DeleteIcon } from "@chakra-ui/icons";
+import { ArrowDownIcon, ArrowUpIcon, CloseIcon, DeleteIcon } from "@chakra-ui/icons";
 
 // Components
 import IssueComments from "./IssueComments";
-
-// Quill Imports (inc CSS)
-import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
 import Editor from "../../shared/Editor";
+import PrioritySelect from "./PrioritySelect";
 
 interface Props {
 	isOpen: boolean;
@@ -71,9 +67,11 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 	// Hooks
 	const [alertOpen, setAlertOpen] = React.useState(false);
 	const [editDesc, setEditDesc] = React.useState(false);
+	const [showPriorityBox, setPriorityBox] = React.useState(false);
 
 	// Refs
 	const cancelRef = React.useRef(null);
+	const node = React.useRef<HTMLDivElement>(null);
 
 	let columnsArr = [];
 
@@ -91,13 +89,13 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 		console.log(data);
 	};
 
-	const handleSelectChange = (e: any) => {
+	const handlePriorityChange = (e: any) => {
 		// TODO: pass a function to change the column of an issue down to this component and call it here
 		// ! you need the issue id, its original column and the new target column
 		// ! both columns need to have their issueIds array updated
 		console.log(issue.id);
 		console.log("Old Column", columns[columnId]);
-		console.table(columns[e.target.value]);
+		console.log(columns[e.target.value]);
 	};
 
 	const changeEditorBool = (arg0: boolean) => {
@@ -106,6 +104,68 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 
 	const changeDesc = (newDesc: string) => {
 		console.log(newDesc);
+	};
+
+	useEffect(() => {
+		if (showPriorityBox) {
+			document.addEventListener("mousedown", handleClickOutside);
+		} else {
+			document.removeEventListener("mousedown", handleClickOutside);
+		}
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [showPriorityBox]);
+
+	const handleClickOutside = (e: any) => {
+		if (node.current && node.current.contains(e.target)) {
+			// inside click
+			return;
+		}
+
+		// outside click
+		setPriorityBox(false);
+	};
+
+	const renderPriority = (value: any) => {
+		switch (value) {
+			case "Highest":
+				return (
+					<>
+						<ArrowUpIcon w='20px' h='20px' color='rgb(205, 19, 23)' />
+						<Text>Highest</Text>
+					</>
+				);
+
+			case "High":
+				return (
+					<>
+						<ArrowUpIcon w='20px' h='20px' color='rgb(233, 73, 74)' />
+						<Text>High</Text>
+					</>
+				);
+			case "Medium":
+				return (
+					<>
+						<ArrowUpIcon w='20px' h='20px' color='rgb(233, 127, 51)' />
+						<Text>Medium</Text>
+					</>
+				);
+			case "Low":
+				return (
+					<>
+						<ArrowDownIcon w='20px' h='20px' color='rgb(45, 135, 56)' />
+						<Text>Low</Text>
+					</>
+				);
+			case "Lowest":
+				return (
+					<>
+						<ArrowDownIcon w='20px' h='20px' color='rgb(87, 165, 90)' />
+						<Text>Lowest</Text>
+					</>
+				);
+		}
 	};
 
 	return (
@@ -156,7 +216,7 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 									overflowY='hidden'
 									w='100%'
 									p='3px 7px'
-									_hover={{ bgColor: "#EBECF0" }}
+									_hover={{ bgColor: "#EDF2F7" }}
 									fontSize='24px'
 									fontWeight='700'
 								/>
@@ -189,17 +249,7 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 										)}
 									</>
 								) : (
-									<Flex flexDirection='column'>
-										<ReactQuill />
-										<Stack pt='10px' isInline>
-											<Button colorScheme='blue' size='sm'>
-												Save
-											</Button>
-											<Button size='sm' onClick={() => setEditDesc(false)}>
-												Cancel
-											</Button>
-										</Stack>
-									</Flex>
+									<Editor initialValue='' closeEditor={changeEditorBool} saveChanges={changeDesc} />
 								)}
 
 								<IssueComments comments={issue.comments} />
@@ -211,7 +261,7 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 									Status
 								</Text>
 								<Flex flexWrap='wrap' textTransform='uppercase'>
-									<Select placeholder='Select a category' onChange={handleSelectChange}>
+									<Select placeholder='Select a category' onChange={handlePriorityChange}>
 										{columnsArr.map((column: any) => {
 											return (
 												<option key={column.id} value={column.id}>
@@ -260,7 +310,22 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 								<Text textTransform='uppercase' opacity={0.7} fontWeight='700'>
 									Priority
 								</Text>
-								{issue.priority}
+								<Box ref={node}>
+									<Stack
+										spacing='6px'
+										w='fit-content'
+										rounded='md'
+										p='5px'
+										pr='9px'
+										display='flex'
+										align='center'
+										_hover={{ background: "#EDF2F7" }}
+										onClick={() => setPriorityBox(true)}
+										isInline>
+										{renderPriority(issue.priority)}
+									</Stack>
+									{showPriorityBox && <PrioritySelect currentPriority={issue.priority} />}
+								</Box>
 							</Box>
 
 							<Box>

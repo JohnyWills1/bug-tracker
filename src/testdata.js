@@ -6,7 +6,12 @@ const initialData = [
 				id: "issue-1",
 				type: "issue", //Issue, Bug, Story
 				title: "Take out the garbage",
-				description: "Make sure to take out the black, green and blue bins",
+				description: `Before you start work on an issue, you can set a time or other type of estimate to calculate how much work you believe it'll take to resolve it. Once you've started to work on a specific issue, log time to keep a record of it.
+				Open the issue and select ••• > Time tracking
+				Fill in the Time Spent field
+				Fill in the Time Remaining field and click Save
+				That's it!
+				💯💯`,
 				priority: "High", //Lowest, Low, Medium, High, Highest
 				comments: [
 					{

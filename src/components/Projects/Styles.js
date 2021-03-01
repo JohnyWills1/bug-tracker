@@ -20,8 +20,7 @@ export const NavLeft = styled.aside`
 export const Icon = styled.div`
 	visibility: visible;
 	${NavLeft}:hover & {
-		opacity: 0;
-		visibility: hidden;
+		display: none;
 	}
 	color: white;
 `;
@@ -30,8 +29,7 @@ export const ItemText = styled.div`
 	visibility: hidden;
 	opacity: 0;
 	text-transform: uppercase;
-	transition: all 0.05s;
-	transition-property: visibility, opacity;
+	cursor: pointer;
 	${NavLeft}:hover & {
 		visibility: visible;
 		opacity: 1;
@@ -39,5 +37,6 @@ export const ItemText = styled.div`
 	padding: 10px;
 	&:hover {
 		background: rgba(255, 255, 255, 0.1);
+		border-radius: 10px;
 	}
 `;

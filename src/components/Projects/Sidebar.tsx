@@ -1,11 +1,13 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Flex, Stack, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Box, Flex } from "@chakra-ui/react";
+import React from "react";
 import { Icon, ItemText, NavLeft } from "./Styles";
 
-interface Props {}
+interface Props {
+	addIssue: () => void;
+}
 
-const Sidebar = (props: Props) => {
+const Sidebar = ({ addIssue }: Props) => {
 	return (
 		<>
 			<NavLeft>
@@ -13,7 +15,14 @@ const Sidebar = (props: Props) => {
 					<Icon>
 						<AddIcon w='22px' h='24px' />
 					</Icon>
-					<ItemText>Add Issue</ItemText>
+					<Box onClick={() => addIssue()}>
+						<ItemText>
+							<Flex justify='center' align='center'>
+								<AddIcon w='22px' h='24px' mr='10px' />
+								Add Issue
+							</Flex>
+						</ItemText>
+					</Box>
 				</Flex>
 			</NavLeft>
 		</>
