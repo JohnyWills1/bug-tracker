@@ -222,7 +222,8 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 								/>
 								<EditableInput fontSize='24px' p='3px 7px' mb='6px' fontWeight='700' />
 							</Editable>
-
+							{/* // TODO: this can't just be text, it has to be a quill object to properly display the content
+							// TODO: look at the quill docs to figure this out */}
 							<Box pl='6px'>
 								<Text fontWeight='700' p='20px 0 6px' fontSize='18px'>
 									Description
@@ -255,9 +256,9 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 								<IssueComments comments={issue.comments} />
 							</Box>
 						</Flex>
-						<Flex justify='space-between' flexDirection='column' w='35%'>
+						<Flex justify='flex-start' flexDirection='column' w='35%'>
 							<Box>
-								<Text textTransform='uppercase' opacity={0.7} fontWeight='700'>
+								<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='12px' mb='5px'>
 									Status
 								</Text>
 								<Flex flexWrap='wrap' textTransform='uppercase'>
@@ -273,7 +274,7 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 								</Flex>
 							</Box>
 							<Box>
-								<Text textTransform='uppercase' opacity={0.7} fontWeight='700'>
+								<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>
 									Assignees
 								</Text>
 								<Flex flexWrap='wrap'>
@@ -296,7 +297,7 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 								</Flex>
 							</Box>
 							<Box>
-								<Text textTransform='uppercase' opacity={0.7} fontWeight='700'>
+								<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>
 									Reporter
 								</Text>
 								{issue.reporter && (
@@ -307,7 +308,7 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 								)}
 							</Box>
 							<Box>
-								<Text textTransform='uppercase' opacity={0.7} fontWeight='700'>
+								<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>
 									Priority
 								</Text>
 								<Box ref={node}>
@@ -329,15 +330,19 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 							</Box>
 
 							<Box>
-								<Text textTransform='uppercase' opacity={0.7} fontWeight='700'>
+								<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>
 									Time Estimate (Hours)
 								</Text>
 								{issue.timeEstimate}
 							</Box>
-							<Divider />
+							<Divider mt='24px' mb='5px' />
 							<Box>
-								<Text opacity={0.6}>Created on {issue.dateCreated}</Text>
-								<Text opacity={0.6}>Updated on {issue.dateUpdated}</Text>
+								<Text fontSize='13px' opacity={0.6}>
+									Created on {issue.dateCreated}
+								</Text>
+								<Text fontSize='13px' opacity={0.6}>
+									Updated on {issue.dateUpdated}
+								</Text>
 							</Box>
 						</Flex>
 					</Flex>
