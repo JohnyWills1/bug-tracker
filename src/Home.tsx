@@ -1,6 +1,7 @@
 import React from "react";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import { useAuth } from "./contexts/AuthContext";
+
 interface Props {}
 
 const Home = (props: Props) => {

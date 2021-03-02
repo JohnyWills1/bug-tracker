@@ -1,15 +1,21 @@
 import { Flex, Stack, Button } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 
 interface Props {
-	initialValue: string;
+	initialValue?: string;
 	closeEditor: (arg0: boolean) => void;
 	saveChanges: (arg0: string) => void;
 }
 
 const Editor = ({ initialValue, closeEditor, saveChanges }: Props) => {
+	const [value, setValue] = useState(initialValue || "");
+
+	const handleChange = (data: any) => {
+		setValue(data);
+	};
+
 	const quillConfig = {
 		toolbar: [
 			["bold", "italic", "underline", "strike"],
@@ -24,9 +30,9 @@ const Editor = ({ initialValue, closeEditor, saveChanges }: Props) => {
 	return (
 		<>
 			<Flex flexDirection='column'>
-				<ReactQuill value={initialValue} modules={quillConfig} />
+				<ReactQuill defaultValue={initialValue} modules={quillConfig} onChange={handleChange} />
 				<Stack pt='10px' isInline>
-					<Button colorScheme='blue' size='sm' onClick={() => saveChanges("test")}>
+					<Button colorScheme='blue' size='sm' onClick={() => saveChanges(value)}>
 						Save
 					</Button>
 					<Button size='sm' onClick={() => closeEditor(false)}>

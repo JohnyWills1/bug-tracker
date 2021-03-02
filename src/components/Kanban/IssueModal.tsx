@@ -30,10 +30,14 @@ import {
 } from "@chakra-ui/react";
 import { ArrowDownIcon, ArrowUpIcon, CloseIcon, DeleteIcon } from "@chakra-ui/icons";
 
+// Quill
+import "quill/dist/quill.snow.css";
+
 // Components
 import IssueComments from "./IssueComments";
 import Editor from "../../shared/Editor";
 import PrioritySelect from "./PrioritySelect";
+import QuillText from "../../shared/QuillText";
 
 interface Props {
 	isOpen: boolean;
@@ -61,9 +65,10 @@ interface Props {
 	columnId: any;
 	delIssue: (id: any, columnId: any) => void;
 	columns: any;
+	changeIssueTitle: (arg0: any, arg1: any) => void;
 }
 
-const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Props) => {
+const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns, changeIssueTitle }: Props) => {
 	// Hooks
 	const [alertOpen, setAlertOpen] = React.useState(false);
 	const [editDesc, setEditDesc] = React.useState(false);
@@ -84,9 +89,11 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 		setAlertOpen(false);
 	};
 
-	const changeIssueTitle = (data: any) => {
+	const changeTitle = (data: any) => {
 		// TODO: finish this with a props passed function
-		console.log(data);
+		let newIssue = JSON.parse(JSON.stringify(issue));
+		newIssue.title = data;
+		changeIssueTitle(newIssue, issue.id);
 	};
 
 	const handlePriorityChange = (e: any) => {
@@ -169,7 +176,7 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 	};
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose} autoFocus={false} isCentered={true} size='5xl'>
+		<Modal isOpen={isOpen} onClose={onClose} autoFocus={false} isCentered={true} scrollBehavior='outside' size='5xl'>
 			<ModalOverlay />
 			<ModalContent>
 				<ModalHeader py='18px'>
@@ -208,7 +215,7 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 					<Flex w='100%' h='fit-content' justify='space-between'>
 						<Flex pr='50px' flexDirection='column' w='65%'>
 							<Editable
-								onSubmit={(data) => changeIssueTitle(data)}
+								onSubmit={(data) => changeTitle(data)}
 								defaultValue={issue.title}
 								selectAllOnFocus={false}
 								rounded='md'>
@@ -228,29 +235,22 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns }: Pro
 								<Text fontWeight='700' p='20px 0 6px' fontSize='18px'>
 									Description
 								</Text>
-								{/* <div style={{ width: "100%", height: "fit-conent" }}>
-									<div ref={quillRef} />
-								</div> */}
-								{issue.description && issue.description.length ? (
+								{editDesc ? (
+									<Editor
+										initialValue={issue.description}
+										closeEditor={changeEditorBool}
+										saveChanges={changeDesc}
+									/>
+								) : (
 									<>
-										{editDesc ? (
-											<Editor
-												initialValue={issue.description}
-												closeEditor={changeEditorBool}
-												saveChanges={changeDesc}
-											/>
-										) : (
-											<Box
-												w='100%'
-												h='fit-content'
-												onClick={() => setEditDesc(true)}
-												_hover={{ cursor: "text" }}>
-												{issue.description}
+										{issue.description && issue.description.length ? (
+											<Box onClick={() => setEditDesc(true)}>
+												<QuillText value={issue.description} />
 											</Box>
+										) : (
+											<Text onClick={() => setEditDesc(true)}>Add a description...</Text>
 										)}
 									</>
-								) : (
-									<Editor initialValue='' closeEditor={changeEditorBool} saveChanges={changeDesc} />
 								)}
 
 								<IssueComments comments={issue.comments} />

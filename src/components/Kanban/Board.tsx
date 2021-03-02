@@ -230,6 +230,8 @@ const Board = ({ projectData }: Props) => {
 		});
 	};
 
+	const changeColumn = () => {};
+
 	const deleteColumn = (columnId: any) => {
 		// Removed column from columns and from columnOrder
 		const columnsCopy = JSON.parse(JSON.stringify(boardData.columns));
@@ -248,6 +250,22 @@ const Board = ({ projectData }: Props) => {
 				...prevData,
 				columns: newColumns,
 				columnOrder: newColumnOrder,
+			};
+
+			return newData;
+		});
+	};
+
+	const changeIssueTitle = (newIssue: any, issueId: any) => {
+		setBoardData((prevData: any) => {
+			const newIssues = {
+				...prevData.issues,
+				[issueId]: newIssue,
+			};
+
+			const newData = {
+				...prevData,
+				issues: newIssues,
 			};
 
 			return newData;
@@ -299,6 +317,7 @@ const Board = ({ projectData }: Props) => {
 												index={index}
 												delIssue={delIssue}
 												columnId={columnId}
+												changeIssueTitle={changeIssueTitle}
 											/>
 										);
 									})}
