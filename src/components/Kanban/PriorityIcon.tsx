@@ -1,6 +1,5 @@
 import React from "react";
 import { ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
-import { Text } from "@chakra-ui/react";
 
 interface Props {
 	priority: string;
