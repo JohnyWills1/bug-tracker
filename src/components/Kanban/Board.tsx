@@ -272,6 +272,27 @@ const Board = ({ projectData }: Props) => {
 		});
 	};
 
+	const changePriority = (newPriority: string, issueId: any) => {
+		setBoardData((prevData: any) => {
+			const newIssue = {
+				...prevData.issues[issueId],
+				priority: newPriority,
+			};
+
+			const newIssues = {
+				...prevData.issues,
+				[issueId]: newIssue,
+			};
+
+			const newData = {
+				...prevData,
+				issues: newIssues,
+			};
+
+			return newData;
+		});
+	};
+
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
 			{/* TODO: add react hook form to this editable to save the user entered value, and update the state */}
@@ -318,6 +339,7 @@ const Board = ({ projectData }: Props) => {
 												delIssue={delIssue}
 												columnId={columnId}
 												changeIssueTitle={changeIssueTitle}
+												changePriority={changePriority}
 											/>
 										);
 									})}

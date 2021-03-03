@@ -30,9 +30,10 @@ interface Props {
 	changeIssueTitle: (arg0: any, arg1: any) => void;
 	columnId: any;
 	columns: any;
+	changePriority: (arg0: string, arg1: any) => void;
 }
 
-const IssueCard = ({ issue, index, delIssue, columnId, columns, changeIssueTitle }: Props) => {
+const IssueCard = ({ issue, index, delIssue, columnId, columns, changeIssueTitle, changePriority }: Props) => {
 	// * ChakraUI
 	// Modal hooks
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -73,6 +74,7 @@ const IssueCard = ({ issue, index, delIssue, columnId, columns, changeIssueTitle
 									delIssue={delIssue}
 									columnId={columnId}
 									changeIssueTitle={changeIssueTitle}
+									changePriority={changePriority}
 								/>
 							)}
 						</Box>

@@ -4,12 +4,15 @@ import React from "react";
 
 interface Props {
 	currentPriority: any;
+	changePriority: (arg0: string) => void;
+	showPBox: (arg0: boolean) => void;
 }
 
-const PrioritySelect = ({ currentPriority }: Props) => {
+const PrioritySelect = ({ currentPriority, changePriority, showPBox }: Props) => {
 	return (
 		<>
 			<Stack
+				cursor='pointer'
 				position='absolute'
 				zIndex={101}
 				backgroundColor='white'
@@ -19,6 +22,10 @@ const PrioritySelect = ({ currentPriority }: Props) => {
 				h='fit-content'>
 				{currentPriority !== "Highest" && (
 					<Stack
+						onClick={() => {
+							changePriority("Highest");
+							showPBox(false);
+						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}
 						rounded='md'
 						p='8px'
@@ -31,6 +38,10 @@ const PrioritySelect = ({ currentPriority }: Props) => {
 				)}
 				{currentPriority !== "High" && (
 					<Stack
+						onClick={() => {
+							changePriority("High");
+							showPBox(false);
+						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}
 						rounded='md'
 						p='8px'
@@ -43,6 +54,10 @@ const PrioritySelect = ({ currentPriority }: Props) => {
 				)}
 				{currentPriority !== "Medium" && (
 					<Stack
+						onClick={() => {
+							changePriority("Medium");
+							showPBox(false);
+						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}
 						rounded='md'
 						p='8px'
@@ -55,6 +70,10 @@ const PrioritySelect = ({ currentPriority }: Props) => {
 				)}
 				{currentPriority !== "Low" && (
 					<Stack
+						onClick={() => {
+							changePriority("Low");
+							showPBox(false);
+						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}
 						rounded='md'
 						p='8px'
@@ -67,6 +86,10 @@ const PrioritySelect = ({ currentPriority }: Props) => {
 				)}
 				{currentPriority !== "Lowest" && (
 					<Stack
+						onClick={() => {
+							changePriority("Lowest");
+							showPBox(false);
+						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}
 						rounded='md'
 						p='8px'

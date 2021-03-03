@@ -66,9 +66,10 @@ interface Props {
 	delIssue: (id: any, columnId: any) => void;
 	columns: any;
 	changeIssueTitle: (arg0: any, arg1: any) => void;
+	changePriority: (arg0: string, arg1: any) => void;
 }
 
-const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns, changeIssueTitle }: Props) => {
+const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns, changeIssueTitle, changePriority }: Props) => {
 	// Hooks
 	const [alertOpen, setAlertOpen] = React.useState(false);
 	const [editDesc, setEditDesc] = React.useState(false);
@@ -175,8 +176,12 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns, chang
 		}
 	};
 
+	const localChangePriority = (newPriority: string) => {
+		changePriority(newPriority, issue.id);
+	};
+
 	return (
-		<Modal isOpen={isOpen} onClose={onClose} autoFocus={false} isCentered={true} scrollBehavior='outside' size='5xl'>
+		<Modal isOpen={isOpen} onClose={onClose} autoFocus={false} returnFocusOnClose={true} scrollBehavior='outside' size='5xl'>
 			<ModalOverlay />
 			<ModalContent>
 				<ModalHeader py='18px'>
@@ -313,6 +318,7 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns, chang
 								</Text>
 								<Box ref={node}>
 									<Stack
+										cursor='pointer'
 										spacing='6px'
 										w='fit-content'
 										rounded='md'
@@ -325,7 +331,13 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns, chang
 										isInline>
 										{renderPriority(issue.priority)}
 									</Stack>
-									{showPriorityBox && <PrioritySelect currentPriority={issue.priority} />}
+									{showPriorityBox && (
+										<PrioritySelect
+											currentPriority={issue.priority}
+											changePriority={localChangePriority}
+											showPBox={setPriorityBox}
+										/>
+									)}
 								</Box>
 							</Box>
 
