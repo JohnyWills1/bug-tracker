@@ -230,7 +230,7 @@ const Board = ({ projectData }: Props) => {
 		});
 	};
 
-	const changeColumn = () => {};
+	// const changeColumn = () => {};
 
 	const deleteColumn = (columnId: any) => {
 		// Removed column from columns and from columnOrder

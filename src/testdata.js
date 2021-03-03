@@ -7,7 +7,7 @@ const initialData = [
 				type: "issue", //Issue, Bug, Story
 				title: "Take out the garbage",
 				description: `<p>Before you start work on an issue, you can set a time or other type of estimate to	calculate how much work you believe it'll take to resolve it. Once you've started to work on a specific issue, log time to keep a record of it.</p><p><br></p><ul><li>Open the issue and select ••• > Time tracking</li><li>Fill in the Time Spent field</li><li>Fill in the Time Remaining field and click Save</li></ul><h3><u>That's it!</u></h3><h1>💯💯</h1><p>Before you start work on an issue, you can set a time or other type of estimate to	calculate how much work you believe it'll take to resolve it. Once you've started to work on a specific issue, log time to keep a record of it.</p><p><br></p><ul><li>Open the issue and select ••• > Time tracking</li><li>Fill in the Time Spent field</li><li>Fill in the Time Remaining field and click Save</li></ul><h3><u>That's it!</u></h3><h1>💯💯</h1>`,
-				priority: "High", //Lowest, Low, Medium, High, Highest
+				priority: "Low", //Lowest, Low, Medium, High, Highest
 				comments: [
 					{
 						id: "comment-1",
@@ -28,13 +28,13 @@ const initialData = [
 				dateCreated: "18/02/2020",
 				dateUpdated: "19/02/2020",
 			},
-			"issue-2": { id: "issue-2", type: "bug", title: "Get money" },
-			"issue-3": { id: "issue-3", type: "story", title: "Destroy a hedge fund" },
-			"issue-4": { id: "issue-4", title: "Stonks" },
-			"issue-5": { id: "issue-5", title: "Shower" },
-			"issue-6": { id: "issue-6", title: "Go running" },
-			"issue-7": { id: "issue-7", title: "Eat lots" },
-			"issue-8": { id: "issue-8", title: "Have a good conversation!" },
+			"issue-2": { id: "issue-2", type: "bug", title: "Get money", priority: "High" },
+			"issue-3": { id: "issue-3", type: "story", title: "Destroy a hedge fund", priority: "High" },
+			"issue-4": { id: "issue-4", title: "Stonks", priority: "High" },
+			"issue-5": { id: "issue-5", title: "Shower", priority: "High" },
+			"issue-6": { id: "issue-6", title: "Go running", priority: "High" },
+			"issue-7": { id: "issue-7", title: "Eat lots", priority: "High" },
+			"issue-8": { id: "issue-8", title: "Have a good conversation!", priority: "High" },
 		},
 		columns: {
 			"column-1": {
@@ -72,6 +72,7 @@ const initialData = [
 		projectTitle: "Test Project Title",
 		starred: true,
 		background: "#3182CE",
+		users: ["Bob Smith", "John Doe", "Tester123", "Eddy Sella"],
 	},
 	{
 		id: "project-2",

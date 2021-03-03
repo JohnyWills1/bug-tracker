@@ -2,14 +2,14 @@ import React from "react";
 import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { Draggable } from "react-beautiful-dnd";
 import IssueModal from "./IssueModal";
-import { Route, useHistory, useRouteMatch } from "react-router-dom";
+import PriorityIcon from "./PriorityIcon";
 
 interface Props {
 	issue: {
 		id: string;
 		title: string;
 		description?: string;
-		priority?: string;
+		priority: string;
 		comments?: [
 			{
 				id: string;
@@ -39,8 +39,8 @@ const IssueCard = ({ issue, index, delIssue, columnId, columns, changeIssueTitle
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	// React Router
-	const match = useRouteMatch();
-	const history = useHistory();
+	// const match = useRouteMatch();
+	// const history = useHistory();
 
 	return (
 		<Draggable draggableId={issue.id} index={index}>
@@ -64,6 +64,7 @@ const IssueCard = ({ issue, index, delIssue, columnId, columns, changeIssueTitle
 							_hover={{ backgroundColor: "#EBECF0", cursor: "pointer" }}>
 							<Flex flexDirection='column' h='100%' justify='space-between'>
 								<Text>{issue.title}</Text>
+								<PriorityIcon priority={issue.priority} />
 							</Flex>
 							{isOpen && (
 								<IssueModal
