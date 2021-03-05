@@ -333,7 +333,27 @@ const Board = ({ projectData }: Props) => {
 	};
 
 	const removeIssueAssignee = (aName: string, issueId: any) => {
-		console.log("Remove", aName, issueId);
+		setBoardData((prevData: any) => {
+			let aList = [...prevData.issues[issueId].assignees];
+			aList = aList.filter((name: any) => name !== aName);
+
+			const newIssue = {
+				...prevData.issues[issueId],
+				assignees: aList,
+			};
+
+			const newIssues = {
+				...prevData.issues,
+				[issueId]: newIssue,
+			};
+
+			const newData = {
+				...prevData,
+				issues: newIssues,
+			};
+
+			return newData;
+		});
 	};
 
 	return (
