@@ -25,6 +25,7 @@ import {
 	Divider,
 	Tag,
 	TagLabel,
+	TagCloseButton,
 	Avatar,
 	Select,
 } from "@chakra-ui/react";
@@ -39,6 +40,7 @@ import Editor from "../../shared/Editor";
 import PrioritySelect from "./Priority/PrioritySelect";
 import QuillText from "../../shared/QuillText";
 import Reporter from "./Reporter/Reporter";
+import Assignees from "./Assignees/Assignees";
 
 interface Props {
 	isOpen: boolean;
@@ -70,6 +72,8 @@ interface Props {
 	changePriority: (arg0: string, arg1: any) => void;
 	changeIssueReporter: (arg0: string, arg1: any) => void;
 	users: [string];
+	addAssignee: (aName: string, issueId: any) => void;
+	removeAssignee: (aName: string, issueId: any) => void;
 }
 
 const IssueModal = ({
@@ -83,6 +87,8 @@ const IssueModal = ({
 	changePriority,
 	changeIssueReporter,
 	users,
+	addAssignee,
+	removeAssignee,
 }: Props) => {
 	// Hooks
 	const [alertOpen, setAlertOpen] = React.useState(false);
@@ -198,6 +204,14 @@ const IssueModal = ({
 		changeIssueReporter(newReporter, issue.id);
 	};
 
+	const localAddAssignee = (aName: string) => {
+		addAssignee(aName, issue.id);
+	};
+
+	const localRemoveAssignee = (aName: string) => {
+		removeAssignee(aName, issue.id);
+	};
+
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} autoFocus={false} returnFocusOnClose={true} scrollBehavior='outside' size='5xl'>
 			<ModalOverlay />
@@ -300,24 +314,12 @@ const IssueModal = ({
 								<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>
 									Assignees
 								</Text>
-								<Flex flexWrap='wrap'>
-									{issue.assignees &&
-										issue.assignees.map((name: string) => {
-											return (
-												<Tag
-													key={name}
-													w='fit-content'
-													size='lg'
-													colorScheme='gray'
-													borderRadius='md'
-													m='0 10px 5px 0'
-													p='8px 10px'>
-													<Avatar name={name} size='xs' ml={-1} mr={2} />
-													<TagLabel>{name}</TagLabel>
-												</Tag>
-											);
-										})}
-								</Flex>
+								<Assignees
+									users={users}
+									assignees={issue.assignees}
+									addAssignee={localAddAssignee}
+									removeAssignee={localRemoveAssignee}
+								/>
 							</Box>
 							<Box>
 								<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>

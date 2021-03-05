@@ -33,6 +33,8 @@ interface Props {
 	changePriority: (arg0: string, arg1: any) => void;
 	changeIssueReporter: (arg0: string, arg1: any) => void;
 	users: [string];
+	addAssignee: (aName: string, issueId: any) => void;
+	removeAssignee: (aName: string, issueId: any) => void;
 }
 
 const IssueCard = ({
@@ -45,6 +47,8 @@ const IssueCard = ({
 	changePriority,
 	changeIssueReporter,
 	users,
+	addAssignee,
+	removeAssignee,
 }: Props) => {
 	// * ChakraUI
 	// Modal hooks
@@ -79,9 +83,9 @@ const IssueCard = ({
 								<Flex justify='space-between' align='center'>
 									<PriorityIcon priority={issue.priority} />
 									{issue.assignees && (
-										<AvatarGroup max={3}>
+										<AvatarGroup size='xs' fontSize='calc(1.5rem / 2.5);' max={3}>
 											{issue.assignees.map((user: any) => {
-												return <Avatar key={user} name={user} size='xs' />;
+												return <Avatar key={user} name={user} />;
 											})}
 										</AvatarGroup>
 									)}
@@ -99,6 +103,8 @@ const IssueCard = ({
 									changePriority={changePriority}
 									users={users}
 									changeIssueReporter={changeIssueReporter}
+									removeAssignee={removeAssignee}
+									addAssignee={addAssignee}
 								/>
 							)}
 						</Box>

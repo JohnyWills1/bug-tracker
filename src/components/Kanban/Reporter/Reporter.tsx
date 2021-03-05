@@ -44,7 +44,7 @@ const Reporter = ({ reporter, users, changeIssueReporter }: Props) => {
 	};
 
 	return (
-		<Box ref={node}>
+		<Box w='fit-content' ref={node}>
 			{reporter ? (
 				<Tag
 					onClick={() => setRepSelect(true)}

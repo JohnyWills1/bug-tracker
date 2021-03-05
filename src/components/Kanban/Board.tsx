@@ -308,6 +308,34 @@ const Board = ({ projectData }: Props) => {
 		});
 	};
 
+	const addIssueAssignee = (aName: string, issueId: any) => {
+		setBoardData((prevData: any) => {
+			let aList = [...prevData.issues[issueId].assignees];
+			aList.push(aName);
+
+			const newIssue = {
+				...prevData.issues[issueId],
+				assignees: aList,
+			};
+
+			const newIssues = {
+				...prevData.issues,
+				[issueId]: newIssue,
+			};
+
+			const newData = {
+				...prevData,
+				issues: newIssues,
+			};
+
+			return newData;
+		});
+	};
+
+	const removeIssueAssignee = (aName: string, issueId: any) => {
+		console.log("Remove", aName, issueId);
+	};
+
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
 			<Editable
@@ -356,6 +384,8 @@ const Board = ({ projectData }: Props) => {
 												changePriority={changePriority}
 												users={boardData.users}
 												changeIssueReporter={changeIssueReporter}
+												addAssignee={addIssueAssignee}
+												removeAssignee={removeIssueAssignee}
 											/>
 										);
 									})}
