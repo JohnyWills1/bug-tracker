@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { Draggable } from "react-beautiful-dnd";
 import IssueModal from "./IssueModal";
-import PriorityIcon from "./PriorityIcon";
+import PriorityIcon from "./Priority/PriorityIcon";
 
 interface Props {
 	issue: {
@@ -31,9 +31,21 @@ interface Props {
 	columnId: any;
 	columns: any;
 	changePriority: (arg0: string, arg1: any) => void;
+	changeIssueReporter: (arg0: string, arg1: any) => void;
+	users: [string];
 }
 
-const IssueCard = ({ issue, index, delIssue, columnId, columns, changeIssueTitle, changePriority }: Props) => {
+const IssueCard = ({
+	issue,
+	index,
+	delIssue,
+	columnId,
+	columns,
+	changeIssueTitle,
+	changePriority,
+	changeIssueReporter,
+	users,
+}: Props) => {
 	// * ChakraUI
 	// Modal hooks
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -50,7 +62,7 @@ const IssueCard = ({ issue, index, delIssue, columnId, columns, changeIssueTitle
 						<Box
 							rounded='lg'
 							w='100%'
-							h='fit-content'
+							h='100%'
 							minH='100px'
 							mb={3}
 							p='10px'
@@ -62,9 +74,18 @@ const IssueCard = ({ issue, index, delIssue, columnId, columns, changeIssueTitle
 							shadow={snapshot.isDragging ? `5px 10px 30px 0px rgba(9, 30, 66, 0.15)` : `md`}
 							backgroundColor='white'
 							_hover={{ backgroundColor: "#EBECF0", cursor: "pointer" }}>
-							<Flex flexDirection='column' h='100%' justify='space-between'>
+							<Flex flexDirection='column' w='100%' h='80px' justify='space-between'>
 								<Text>{issue.title}</Text>
-								<PriorityIcon priority={issue.priority} />
+								<Flex justify='space-between' align='center'>
+									<PriorityIcon priority={issue.priority} />
+									{issue.assignees && (
+										<AvatarGroup max={3}>
+											{issue.assignees.map((user: any) => {
+												return <Avatar key={user} name={user} size='xs' />;
+											})}
+										</AvatarGroup>
+									)}
+								</Flex>
 							</Flex>
 							{isOpen && (
 								<IssueModal
@@ -76,6 +97,8 @@ const IssueCard = ({ issue, index, delIssue, columnId, columns, changeIssueTitle
 									columnId={columnId}
 									changeIssueTitle={changeIssueTitle}
 									changePriority={changePriority}
+									users={users}
+									changeIssueReporter={changeIssueReporter}
 								/>
 							)}
 						</Box>

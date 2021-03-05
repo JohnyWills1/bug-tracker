@@ -293,9 +293,23 @@ const Board = ({ projectData }: Props) => {
 		});
 	};
 
+	const changeIssueReporter = (newReporter: string, issueId: any) => {
+		setBoardData((prevData: any) => {
+			let issuesCopy = JSON.parse(JSON.stringify(prevData.issues));
+
+			issuesCopy[issueId].reporter = newReporter;
+
+			const newData = {
+				...prevData,
+				issues: issuesCopy,
+			};
+
+			return newData;
+		});
+	};
+
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			{/* TODO: add react hook form to this editable to save the user entered value, and update the state */}
 			<Editable
 				onSubmit={changeProjectTitle}
 				defaultValue={boardData.projectTitle}
@@ -310,9 +324,9 @@ const Board = ({ projectData }: Props) => {
 				{(provided, snapshot) => (
 					<Flex
 						w='100%'
-						h='75vh'
+						minH='75vh'
+						h='fit-content'
 						overflowX='auto'
-						overflowY='hidden'
 						pb={4}
 						{...provided.droppableProps}
 						ref={provided.innerRef}>
@@ -340,6 +354,8 @@ const Board = ({ projectData }: Props) => {
 												columnId={columnId}
 												changeIssueTitle={changeIssueTitle}
 												changePriority={changePriority}
+												users={boardData.users}
+												changeIssueReporter={changeIssueReporter}
 											/>
 										);
 									})}

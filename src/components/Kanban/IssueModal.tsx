@@ -36,8 +36,9 @@ import "quill/dist/quill.snow.css";
 // Components
 import IssueComments from "./IssueComments";
 import Editor from "../../shared/Editor";
-import PrioritySelect from "./PrioritySelect";
+import PrioritySelect from "./Priority/PrioritySelect";
 import QuillText from "../../shared/QuillText";
+import Reporter from "./Reporter/Reporter";
 
 interface Props {
 	isOpen: boolean;
@@ -67,9 +68,22 @@ interface Props {
 	columns: any;
 	changeIssueTitle: (arg0: any, arg1: any) => void;
 	changePriority: (arg0: string, arg1: any) => void;
+	changeIssueReporter: (arg0: string, arg1: any) => void;
+	users: [string];
 }
 
-const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns, changeIssueTitle, changePriority }: Props) => {
+const IssueModal = ({
+	isOpen,
+	onClose,
+	issue,
+	delIssue,
+	columnId,
+	columns,
+	changeIssueTitle,
+	changePriority,
+	changeIssueReporter,
+	users,
+}: Props) => {
 	// Hooks
 	const [alertOpen, setAlertOpen] = React.useState(false);
 	const [editDesc, setEditDesc] = React.useState(false);
@@ -178,6 +192,10 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns, chang
 
 	const localChangePriority = (newPriority: string) => {
 		changePriority(newPriority, issue.id);
+	};
+
+	const localChangeIssueReporter = (newReporter: string) => {
+		changeIssueReporter(newReporter, issue.id);
 	};
 
 	return (
@@ -305,12 +323,11 @@ const IssueModal = ({ isOpen, onClose, issue, delIssue, columnId, columns, chang
 								<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>
 									Reporter
 								</Text>
-								{issue.reporter && (
-									<Tag size='lg' colorScheme='gray' borderRadius='md' m='0 10px 5px 0' p='8px 10px'>
-										<Avatar name={issue.reporter} size='xs' ml={-1} mr={2} />
-										<TagLabel>{issue.reporter}</TagLabel>
-									</Tag>
-								)}
+								<Reporter
+									reporter={issue.reporter}
+									users={users}
+									changeIssueReporter={localChangeIssueReporter}
+								/>
 							</Box>
 							<Box>
 								<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>

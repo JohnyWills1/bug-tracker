@@ -15,6 +15,8 @@ const PrioritySelect = ({ currentPriority, changePriority, showPBox }: Props) =>
 				cursor='pointer'
 				position='absolute'
 				zIndex={101}
+				py='10px'
+				px='10px'
 				backgroundColor='white'
 				rounded='md'
 				boxShadow='rgb(9 30 66 / 25%) 0px 4px 8px -2px, rgb(9 30 66 / 31%) 0px 0px 1px'
