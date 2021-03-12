@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { EditablePreview, EditableInput, Editable, Flex } from "@chakra-ui/react";
+import { EditablePreview, EditableInput, Editable, Flex, useToast } from "@chakra-ui/react";
 import Column from "./Column";
 import IssueCard from "./IssueCard";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import AddColumn from "./AddColumn";
+import BoardContext from "../../contexts/BoardContext";
 
 interface Props {
 	projectData: any;
@@ -12,6 +13,8 @@ interface Props {
 
 const Board = ({ projectData }: Props) => {
 	const [boardData, setBoardData]: any = useState(projectData);
+
+	const toast = useToast();
 
 	const onDragEnd = (result: any) => {
 		const { destination, source, draggableId, type } = result;
@@ -129,6 +132,15 @@ const Board = ({ projectData }: Props) => {
 
 			return newData;
 		});
+
+		toast({
+			position: "top-right",
+			title: "Issue Deleted",
+			description: `${boardData.issues[id].title} `,
+			status: "success",
+			duration: 1500,
+			isClosable: true,
+		});
 	};
 
 	const addIssue = (issue: any, columnId: any) => {
@@ -230,7 +242,46 @@ const Board = ({ projectData }: Props) => {
 		});
 	};
 
-	// const changeColumn = () => {};
+	const changeColumn = (issueId: any, oldColumnId: any, newColumnId: any) => {
+		setBoardData((prevData: any) => {
+			const removedIssueIds = prevData.columns[oldColumnId].issueIds.filter((id: any) => id !== issueId);
+
+			const removedColumn = {
+				...prevData.columns[oldColumnId],
+				issueIds: removedIssueIds,
+			};
+
+			let newIssueIds = [...prevData.columns[newColumnId].issueIds];
+			newIssueIds.push(issueId);
+
+			const addedColumn = {
+				...prevData.columns[newColumnId],
+				issueIds: newIssueIds,
+			};
+
+			const newColumns = {
+				...prevData.columns,
+				[oldColumnId]: removedColumn,
+				[newColumnId]: addedColumn,
+			};
+
+			const newData = {
+				...prevData,
+				columns: newColumns,
+			};
+
+			return newData;
+		});
+
+		toast({
+			position: "top-right",
+			title: "Issue Status Updated",
+			description: `${boardData.issues[issueId].title} moved to ${boardData.columns[newColumnId].title}`,
+			status: "success",
+			duration: 1500,
+			isClosable: true,
+		});
+	};
 
 	const deleteColumn = (columnId: any) => {
 		// Removed column from columns and from columnOrder
@@ -356,69 +407,96 @@ const Board = ({ projectData }: Props) => {
 		});
 	};
 
+	const changeIssueDescription = (newDesc: string, issueId: any) => {
+		setBoardData((prevData: any) => {
+			let issue = JSON.parse(JSON.stringify(prevData.issues[issueId]));
+
+			issue.description = newDesc;
+
+			const newIssues = {
+				...prevData.issues,
+				[issueId]: issue,
+			};
+
+			const newData = {
+				...prevData,
+				issues: newIssues,
+			};
+
+			return newData;
+		});
+	};
+
 	return (
-		<DragDropContext onDragEnd={onDragEnd}>
-			<Editable
-				onSubmit={changeProjectTitle}
-				defaultValue={boardData.projectTitle}
-				textAlign='center'
-				fontSize='3xl'
-				mb={5}>
-				<EditablePreview w='100%' />
-				<EditableInput />
-			</Editable>
+		<BoardContext.Provider
+			value={{
+				deleteIssue: delIssue,
+				changeIssueTitle: changeIssueTitle,
+				changePriority: changePriority,
+				changeIssueReporter: changeIssueReporter,
+				addIssueAssignee: addIssueAssignee,
+				removeIssueAssignee: removeIssueAssignee,
+				changeIssueDescription: changeIssueDescription,
+			}}>
+			<DragDropContext onDragEnd={onDragEnd}>
+				<Editable
+					onSubmit={changeProjectTitle}
+					defaultValue={boardData.projectTitle}
+					textAlign='center'
+					fontSize='3xl'
+					mb={5}>
+					<EditablePreview w='100%' />
+					<EditableInput />
+				</Editable>
 
-			<Droppable direction='horizontal' droppableId='all-columns' type='column'>
-				{(provided, snapshot) => (
-					<Flex
-						w='100%'
-						minH='75vh'
-						h='fit-content'
-						overflowX='auto'
-						pb={4}
-						{...provided.droppableProps}
-						ref={provided.innerRef}>
-						{boardData.columnOrder.map((columnId: string, index: any) => {
-							const column = boardData.columns[columnId];
+				<Droppable direction='horizontal' droppableId='all-columns' type='column'>
+					{(provided, snapshot) => (
+						<Flex
+							w='100%'
+							minH='75vh'
+							h='fit-content'
+							overflowX='auto'
+							pb={4}
+							pt={4}
+							{...provided.droppableProps}
+							ref={provided.innerRef}>
+							{boardData.columnOrder.map((columnId: string, index: any) => {
+								const column = boardData.columns[columnId];
 
-							const issues = column.issueIds.map((id: any) => boardData.issues[id]);
+								const issues = column.issueIds.map((id: any) => boardData.issues[id]);
 
-							return (
-								<Column
-									key={column.id}
-									index={index}
-									column={column}
-									addIssue={addIssue}
-									deleteColumn={deleteColumn}
-									changeColumnTitle={changeColumnTitle}>
-									{issues.map((issue: any, index: any) => {
-										return (
-											<IssueCard
-												columns={boardData.columns}
-												key={issue.id}
-												issue={issue}
-												index={index}
-												delIssue={delIssue}
-												columnId={columnId}
-												changeIssueTitle={changeIssueTitle}
-												changePriority={changePriority}
-												users={boardData.users}
-												changeIssueReporter={changeIssueReporter}
-												addAssignee={addIssueAssignee}
-												removeAssignee={removeIssueAssignee}
-											/>
-										);
-									})}
-								</Column>
-							);
-						})}
-						{provided.placeholder}
+								return (
+									<Column
+										key={column.id}
+										index={index}
+										column={column}
+										addIssue={addIssue}
+										deleteColumn={deleteColumn}
+										changeColumnTitle={changeColumnTitle}>
+										{issues.map((issue: any, index: any) => {
+											return (
+												<IssueCard
+													columns={boardData.columns}
+													key={issue.id}
+													issue={issue}
+													index={index}
+													columnId={columnId}
+													users={boardData.users}
+													changeColumn={changeColumn}
+												/>
+											);
+										})}
+									</Column>
+								);
+							})}
+							{provided.placeholder}
 
-						<AddColumn addColumn={addColumn} />
-					</Flex>
-				)}
-			</Droppable>
-		</DragDropContext>
+							<AddColumn addColumn={addColumn} />
+						</Flex>
+					)}
+				</Droppable>
+			</DragDropContext>
+		</BoardContext.Provider>
 	);
 };
 

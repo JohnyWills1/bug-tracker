@@ -4,10 +4,11 @@ import { Tag, Avatar, TagLabel, Text, Box, Stack } from "@chakra-ui/react";
 interface Props {
 	reporter: string;
 	users: [string];
-	changeIssueReporter: (arg0: string) => void;
+	changeIssueReporter: (newReporter: string, id: any) => void;
+	id: any;
 }
 
-const Reporter = ({ reporter, users, changeIssueReporter }: Props) => {
+const Reporter = ({ reporter, users, changeIssueReporter, id }: Props) => {
 	// State
 	const [showRepSelect, setRepSelect] = React.useState(false);
 
@@ -40,7 +41,7 @@ const Reporter = ({ reporter, users, changeIssueReporter }: Props) => {
 	});
 
 	const setNewRep = (newRep: string) => {
-		changeIssueReporter(newRep);
+		changeIssueReporter(newRep, id);
 	};
 
 	return (

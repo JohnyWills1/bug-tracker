@@ -26,30 +26,13 @@ interface Props {
 		dateUpdated: string;
 	};
 	index: any;
-	delIssue: (id: any, columnId: any) => void;
-	changeIssueTitle: (arg0: any, arg1: any) => void;
 	columnId: any;
 	columns: any;
-	changePriority: (arg0: string, arg1: any) => void;
-	changeIssueReporter: (arg0: string, arg1: any) => void;
 	users: [string];
-	addAssignee: (aName: string, issueId: any) => void;
-	removeAssignee: (aName: string, issueId: any) => void;
+	changeColumn: (issueId: any, oldColumnId: any, newColumnId: any) => void;
 }
 
-const IssueCard = ({
-	issue,
-	index,
-	delIssue,
-	columnId,
-	columns,
-	changeIssueTitle,
-	changePriority,
-	changeIssueReporter,
-	users,
-	addAssignee,
-	removeAssignee,
-}: Props) => {
+const IssueCard = ({ issue, index, columnId, columns, users, changeColumn }: Props) => {
 	// * ChakraUI
 	// Modal hooks
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -97,14 +80,9 @@ const IssueCard = ({
 									isOpen={isOpen}
 									onClose={onClose}
 									issue={issue}
-									delIssue={delIssue}
 									columnId={columnId}
-									changeIssueTitle={changeIssueTitle}
-									changePriority={changePriority}
 									users={users}
-									changeIssueReporter={changeIssueReporter}
-									removeAssignee={removeAssignee}
-									addAssignee={addAssignee}
+									changeColumn={changeColumn}
 								/>
 							)}
 						</Box>

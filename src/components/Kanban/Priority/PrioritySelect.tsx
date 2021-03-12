@@ -4,11 +4,12 @@ import React from "react";
 
 interface Props {
 	currentPriority: any;
-	changePriority: (arg0: string) => void;
+	changePriority: (newPriority: string, id: any) => void;
 	showPBox: (arg0: boolean) => void;
+	id: any;
 }
 
-const PrioritySelect = ({ currentPriority, changePriority, showPBox }: Props) => {
+const PrioritySelect = ({ currentPriority, changePriority, showPBox, id }: Props) => {
 	return (
 		<>
 			<Stack
@@ -25,7 +26,7 @@ const PrioritySelect = ({ currentPriority, changePriority, showPBox }: Props) =>
 				{currentPriority !== "Highest" && (
 					<Stack
 						onClick={() => {
-							changePriority("Highest");
+							changePriority("Highest", id);
 							showPBox(false);
 						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}
@@ -41,7 +42,7 @@ const PrioritySelect = ({ currentPriority, changePriority, showPBox }: Props) =>
 				{currentPriority !== "High" && (
 					<Stack
 						onClick={() => {
-							changePriority("High");
+							changePriority("High", id);
 							showPBox(false);
 						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}
@@ -57,7 +58,7 @@ const PrioritySelect = ({ currentPriority, changePriority, showPBox }: Props) =>
 				{currentPriority !== "Medium" && (
 					<Stack
 						onClick={() => {
-							changePriority("Medium");
+							changePriority("Medium", id);
 							showPBox(false);
 						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}
@@ -73,7 +74,7 @@ const PrioritySelect = ({ currentPriority, changePriority, showPBox }: Props) =>
 				{currentPriority !== "Low" && (
 					<Stack
 						onClick={() => {
-							changePriority("Low");
+							changePriority("Low", id);
 							showPBox(false);
 						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}
@@ -89,7 +90,7 @@ const PrioritySelect = ({ currentPriority, changePriority, showPBox }: Props) =>
 				{currentPriority !== "Lowest" && (
 					<Stack
 						onClick={() => {
-							changePriority("Lowest");
+							changePriority("Lowest", id);
 							showPBox(false);
 						}}
 						_hover={{ background: "rgb(210, 229, 254)" }}

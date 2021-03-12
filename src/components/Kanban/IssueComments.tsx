@@ -15,6 +15,8 @@ interface Props {
 
 const IssueComments = ({ comments }: Props) => {
 	const [showCommentButtons, setShowCommentButtons] = React.useState(false);
+	const [comment, setComment] = React.useState("");
+
 	// Auth Context
 	const { user } = useAuth();
 
@@ -27,13 +29,24 @@ const IssueComments = ({ comments }: Props) => {
 				<Flex>
 					<Avatar size='sm' name={user.displayName ? user.displayName : user.email} mr='25px' />
 					<Flex flexDirection='column' w='100%'>
-						<Textarea minH='50px' placeholder='Add a comment...' onFocus={() => setShowCommentButtons(true)} />
+						<Textarea
+							minH='50px'
+							value={comment}
+							placeholder='Add a comment...'
+							onChange={(e) => setComment(e.target.value)}
+							onFocus={() => setShowCommentButtons(true)}
+						/>
 						{showCommentButtons && (
 							<Stack pt='10px' isInline>
-								<Button size='sm' colorScheme='blue'>
+								<Button size='sm' colorScheme='blue' onClick={() => console.log("save new comment", comment)}>
 									Save
 								</Button>
-								<Button size='sm' onClick={() => setShowCommentButtons(false)}>
+								<Button
+									size='sm'
+									onClick={() => {
+										setShowCommentButtons(false);
+										setComment("");
+									}}>
 									Cancel
 								</Button>
 							</Stack>

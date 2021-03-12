@@ -5,11 +5,12 @@ import ReactQuill from "react-quill";
 
 interface Props {
 	initialValue?: string;
-	closeEditor: (arg0: boolean) => void;
-	saveChanges: (arg0: string) => void;
+	setEditor: (arg0: boolean) => void;
+	saveChanges: (newDesc: string, id: any) => void;
+	id: any;
 }
 
-const Editor = ({ initialValue, closeEditor, saveChanges }: Props) => {
+const Editor = ({ initialValue, setEditor, saveChanges, id }: Props) => {
 	const [value, setValue] = useState(initialValue || "");
 
 	const handleChange = (data: any) => {
@@ -32,10 +33,16 @@ const Editor = ({ initialValue, closeEditor, saveChanges }: Props) => {
 			<Flex flexDirection='column'>
 				<ReactQuill defaultValue={initialValue} modules={quillConfig} onChange={handleChange} />
 				<Stack pt='10px' isInline>
-					<Button colorScheme='blue' size='sm' onClick={() => saveChanges(value)}>
+					<Button
+						colorScheme='blue'
+						size='sm'
+						onClick={() => {
+							saveChanges(value, id);
+							setEditor(false);
+						}}>
 						Save
 					</Button>
-					<Button size='sm' onClick={() => closeEditor(false)}>
+					<Button size='sm' onClick={() => setEditor(false)}>
 						Cancel
 					</Button>
 				</Stack>

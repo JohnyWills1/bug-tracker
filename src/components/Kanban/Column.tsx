@@ -150,9 +150,11 @@ const Column = ({ column, children, index, addIssue, changeColumnTitle, deleteCo
 						rounded='md'
 						bgColor='#F4F5F7'
 						w='100%'
-						minW='250px'
+						minW='280px'
 						h='fit-content'
 						minH={snapshot.isDragging ? "fit-content" : "100%"}
+						boxShadow={snapshot.isDragging ? "outline" : "none"}
+						transition={snapshot.isDropAnimating ? "box-shadow 1200ms" : "box-shadow 1200ms"}
 						{...provided.draggableProps}
 						ref={provided.innerRef}>
 						<Flex py={3} px={4} justify='space-between' align='center' {...provided.dragHandleProps}>

@@ -19,7 +19,7 @@ const ForgotPassword = (props: Props) => {
 	// Hooks
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	// React Router
+	// Chakra Toast
 	const toast = useToast();
 
 	// Submit Reset Password Function, passed to the handle submit function

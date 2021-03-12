@@ -5,11 +5,12 @@ import React, { useEffect } from "react";
 interface Props {
 	users: string[];
 	assignees: string[];
-	removeAssignee: (aName: string) => void;
-	addAssignee: (aName: string) => void;
+	removeAssignee: (aName: string, id: any) => void;
+	addAssignee: (aName: string, id: any) => void;
+	id: any;
 }
 
-const Assignees = ({ assignees, users, removeAssignee, addAssignee }: Props) => {
+const Assignees = ({ assignees, users, removeAssignee, addAssignee, id }: Props) => {
 	// State
 	const [showABox, setABox] = React.useState(false);
 	const [filteredUsers, setFUsers] = React.useState(users);
@@ -69,7 +70,11 @@ const Assignees = ({ assignees, users, removeAssignee, addAssignee }: Props) => 
 								p='8px 10px'>
 								<Avatar name={name} size='xs' ml={-1} mr={2} />
 								<TagLabel>{name}</TagLabel>
-								<TagCloseButton onClick={() => removeAssignee(name)} />
+								<TagCloseButton
+									onClick={() => {
+										removeAssignee(name, id);
+									}}
+								/>
 							</Tag>
 						);
 					})}
@@ -117,7 +122,7 @@ const Assignees = ({ assignees, users, removeAssignee, addAssignee }: Props) => 
 									borderRadius='md'
 									p='8px 10px'
 									onClick={() => {
-										addAssignee(name);
+										addAssignee(name, id);
 									}}
 									_hover={{ background: "rgb(210, 229, 254)" }}>
 									<Avatar name={name} size='xs' ml={-1} mr={2} />
