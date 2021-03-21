@@ -11,8 +11,10 @@ export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 
-	const signUp = (email, password) => {
-		return auth.createUserWithEmailAndPassword(email, password);
+	const signUp = (email, password, username) => {
+		return auth.createUserWithEmailAndPassword(email, password).then((result) => {
+			result.user.updateProfile({ displayName: username });
+		});
 	};
 
 	const signOut = () => {

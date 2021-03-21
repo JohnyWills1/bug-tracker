@@ -19,6 +19,7 @@ import initialData from "../../testdata";
 import Board from "../Kanban/Board";
 import PageNotFound from "../../PageNotFound";
 import Sidebar from "./Sidebar";
+import CreateIssueModal from "../Kanban/Issue/CreateIssueModal";
 
 interface Props {}
 
@@ -41,6 +42,10 @@ const Project = (props: Props) => {
 		return <PageNotFound />;
 	}
 
+	const addNewIssue = (issue: any) => {
+		console.log(issue);
+	};
+
 	return (
 		<Flex align='center' px={5} py={6} ml='50px' flexDirection='column' minH='90vh' h='auto'>
 			<Sidebar addIssue={addIssue} />
@@ -58,25 +63,7 @@ const Project = (props: Props) => {
 
 			<Board projectData={projectData} />
 
-			{isOpen && (
-				<>
-					<Modal isOpen={isOpen} onClose={onClose}>
-						<ModalOverlay />
-						<ModalContent>
-							<ModalHeader>Modal Title</ModalHeader>
-							<ModalCloseButton />
-							<ModalBody>Test</ModalBody>
-
-							<ModalFooter>
-								<Button colorScheme='blue' mr={3} onClick={onClose}>
-									Close
-								</Button>
-								<Button variant='ghost'>Secondary Action</Button>
-							</ModalFooter>
-						</ModalContent>
-					</Modal>
-				</>
-			)}
+			<CreateIssueModal isOpen={isOpen} onClose={onClose} addNewIssue={addNewIssue} users={projectData.users} />
 		</Flex>
 	);
 };

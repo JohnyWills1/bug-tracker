@@ -32,12 +32,13 @@ import "quill/dist/quill.snow.css";
 
 // Components
 import IssueComments from "./IssueComments";
-import Editor from "../../shared/Editor";
-import PrioritySelect from "./Priority/PrioritySelect";
-import QuillText from "../../shared/QuillText";
-import Reporter from "./Reporter/Reporter";
-import Assignees from "./Assignees/Assignees";
-import BoardContext from "../../contexts/BoardContext";
+import Editor from "../../../shared/Editor";
+import PrioritySelect from "../Priority/PrioritySelect";
+import QuillText from "../../../shared/QuillText";
+import Reporter from "../Reporter/Reporter";
+import Assignees from "../Assignees/Assignees";
+import BoardContext from "../../../contexts/BoardContext";
+import TimeEstimate from "../TimeEstimate/TimeEstimate";
 
 interface Props {
 	isOpen: boolean;
@@ -51,8 +52,9 @@ interface Props {
 			{
 				id: string;
 				content: string;
-				datePosted: string;
-				user: string;
+				datePosted: any;
+				userName: string;
+				userId: string;
 			}
 		];
 		type: string;
@@ -117,7 +119,6 @@ const IssueModal = ({ isOpen, onClose, issue, columnId, columns, users, changeCo
 			// inside click
 			return;
 		}
-
 		// outside click
 		setPriorityBox(false);
 	};
@@ -174,6 +175,10 @@ const IssueModal = ({ isOpen, onClose, issue, columnId, columns, users, changeCo
 					addIssueAssignee,
 					removeIssueAssignee,
 					changeIssueDescription,
+					addComment,
+					editComment,
+					deleteComment,
+					changeTime,
 				}) => (
 					<>
 						<ModalOverlay />
@@ -255,7 +260,13 @@ const IssueModal = ({ isOpen, onClose, issue, columnId, columns, users, changeCo
 												</>
 											)}
 
-											<IssueComments comments={issue.comments} />
+											<IssueComments
+												comments={issue.comments}
+												editComment={editComment}
+												deleteComment={deleteComment}
+												addComment={addComment}
+												id={issue.id}
+											/>
 										</Box>
 									</Flex>
 									<Flex justify='flex-start' flexDirection='column' w='35%'>
@@ -332,10 +343,7 @@ const IssueModal = ({ isOpen, onClose, issue, columnId, columns, users, changeCo
 										</Box>
 
 										<Box>
-											<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>
-												Time Estimate (Hours)
-											</Text>
-											{issue.timeEstimate}
+											<TimeEstimate time={issue.timeEstimate} changeTime={changeTime} id={issue.id} />
 										</Box>
 										<Divider mt='24px' mb='5px' />
 										<Box>

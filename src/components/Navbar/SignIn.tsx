@@ -47,19 +47,22 @@ const SignIn = ({ isOpen, onClose }: Props) => {
 		e.preventDefault();
 		setIsSubmitting(true);
 		try {
-			await logIn(data.emailRequired, data.passwordRequired).then((resp: any) => {
-				setIsSubmitting(false);
-				toast({
-					position: "top-right",
-					title: "Logged In",
-					description: "Welcome back friend!",
-					status: "success",
-					duration: 1000,
-					isClosable: true,
+			await logIn(data.emailRequired, data.passwordRequired)
+				.then((resp: any) => {
+					setIsSubmitting(false);
+					toast({
+						position: "top-right",
+						title: "Logged In",
+						description: "Welcome back friend!",
+						status: "success",
+						duration: 1000,
+						isClosable: true,
+					});
+				})
+				.finally(() => {
+					onClose();
+					history.push("/projects");
 				});
-			});
-			onClose();
-			history.push("/projects");
 		} catch (error) {
 			setIsSubmitting(false);
 			toast({

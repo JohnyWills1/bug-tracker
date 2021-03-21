@@ -13,7 +13,7 @@ import UpdateProfile from "./UpdateProfile";
 import Project from "./components/Projects/Project";
 import PageNotFound from "./PageNotFound";
 import Loading from "./Loading";
-import IssueModal from "./components/Kanban/IssueModal";
+import IssueModal from "./components/Kanban/Issue/IssueModal";
 
 ReactDOM.render(
 	<React.StrictMode>

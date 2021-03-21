@@ -7,7 +7,7 @@ interface Props {
 	assignees: string[];
 	removeAssignee: (aName: string, id: any) => void;
 	addAssignee: (aName: string, id: any) => void;
-	id: any;
+	id?: any;
 }
 
 const Assignees = ({ assignees, users, removeAssignee, addAssignee, id }: Props) => {

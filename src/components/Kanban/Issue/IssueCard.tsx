@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, AvatarGroup, Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { Draggable } from "react-beautiful-dnd";
 import IssueModal from "./IssueModal";
-import PriorityIcon from "./Priority/PriorityIcon";
+import PriorityIcon from "../Priority/PriorityIcon";
 
 interface Props {
 	issue: {
@@ -14,8 +14,9 @@ interface Props {
 			{
 				id: string;
 				content: string;
-				datePosted: string;
-				user: string;
+				datePosted: any;
+				userId: string;
+				userName: string;
 			}
 		];
 		type: string;
@@ -89,14 +90,6 @@ const IssueCard = ({ issue, index, columnId, columns, users, changeColumn }: Pro
 					</Box>
 				);
 			}}
-
-			{/* <Flex justify='space-between' align='center'>
-					<Stack gap={2} display='flex' align='center' isInline>
-						<Text>{issue.issuePriority}</Text>
-						{issue.issueStatus === "In Progress" ? <CheckIcon /> : <NotAllowedIcon />}
-					</Stack>
-					<Avatar name={issue.creatorName} size='sm' />
-				</Flex> */}
 		</Draggable>
 	);
 };

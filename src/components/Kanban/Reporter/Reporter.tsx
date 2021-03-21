@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { Tag, Avatar, TagLabel, Text, Box, Stack } from "@chakra-ui/react";
 
 interface Props {
-	reporter: string;
+	reporter?: string;
 	users: [string];
 	changeIssueReporter: (newReporter: string, id: any) => void;
-	id: any;
+	id?: any;
 }
 
 const Reporter = ({ reporter, users, changeIssueReporter, id }: Props) => {

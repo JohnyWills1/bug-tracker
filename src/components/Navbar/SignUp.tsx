@@ -48,33 +48,33 @@ const SignUp = ({ isOpen, onClose }: Props) => {
 		setIsSubmitting(true);
 
 		if (data.passwordRequired === data.passwordConfRequired) {
-			try {
-				await signUp(data.emailRequired, data.passwordRequired)
-					.then((resp: any) => {
-						setIsSubmitting(false);
-						toast({
-							position: "top-right",
-							title: "Account Created",
-							description: "Your account has been created successfully!",
-							status: "success",
-							duration: 5000,
-							isClosable: true,
-						});
-					})
-					.finally(() => {
-						history.push("/projects");
+			signUp(data.emailRequired, data.passwordRequired, data.usernameRequired)
+				.then(() => {
+					setIsSubmitting(false);
+					toast({
+						position: "top-right",
+						title: "Account Created",
+						description: "Your account has been created successfully!",
+						status: "success",
+						duration: 5000,
+						isClosable: true,
 					});
-			} catch (error) {
-				toast({
-					position: "top-right",
-					title: error.code.replace("/", " "),
-					description: error.message,
-					status: "error",
-					duration: 5000,
-					isClosable: true,
+				})
+				.finally(() => {
+					history.push("/projects");
+				})
+				.catch((error: any) => {
+					console.log(error);
+					toast({
+						position: "top-right",
+						title: error.code.replace("/", " "),
+						description: error.message,
+						status: "error",
+						duration: 5000,
+						isClosable: true,
+					});
+					setIsSubmitting(false);
 				});
-				setIsSubmitting(false);
-			}
 		} else {
 			setError("passwordConfRequired", {
 				type: "manual",

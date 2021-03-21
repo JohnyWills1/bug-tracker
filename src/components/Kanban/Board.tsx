@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { EditablePreview, EditableInput, Editable, Flex, useToast } from "@chakra-ui/react";
 import Column from "./Column";
-import IssueCard from "./IssueCard";
+import IssueCard from "./Issue/IssueCard";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import AddColumn from "./AddColumn";
@@ -427,6 +427,79 @@ const Board = ({ projectData }: Props) => {
 		});
 	};
 
+	const addComment = (comment: any, issueId: any) => {
+		setBoardData((prevData: any) => {
+			let newComments = [...prevData.issues[issueId].comments];
+
+			newComments.push(comment);
+
+			const newIssue = {
+				...prevData.issues[issueId],
+				comments: newComments,
+			};
+
+			const newIssues = {
+				...prevData.issues,
+				[issueId]: newIssue,
+			};
+
+			const newData = {
+				...prevData,
+				issues: newIssues,
+			};
+
+			return newData;
+		});
+	};
+
+	const editComment = (comment: any, issueId: any) => {};
+
+	const deleteComment = (commentId: any, issueId: any) => {
+		setBoardData((prevData: any) => {
+			const newComments = prevData.issues[issueId].comments.filter((comment: any) => comment.id !== commentId);
+
+			console.log(newComments);
+
+			const newIssue = {
+				...prevData.issues[issueId],
+				comments: newComments,
+			};
+
+			const newIssues = {
+				...prevData.issues,
+				[issueId]: newIssue,
+			};
+
+			const newData = {
+				...prevData,
+				issues: newIssues,
+			};
+
+			return newData;
+		});
+	};
+
+	const changeTime = (newTime: any, issueId: any) => {
+		setBoardData((prevData: any) => {
+			const newIssue = {
+				...prevData.issues[issueId],
+				timeEstimate: newTime,
+			};
+
+			const newIssues = {
+				...prevData.issues,
+				[issueId]: newIssue,
+			};
+
+			const newData = {
+				...prevData,
+				issues: newIssues,
+			};
+
+			return newData;
+		});
+	};
+
 	return (
 		<BoardContext.Provider
 			value={{
@@ -437,10 +510,15 @@ const Board = ({ projectData }: Props) => {
 				addIssueAssignee: addIssueAssignee,
 				removeIssueAssignee: removeIssueAssignee,
 				changeIssueDescription: changeIssueDescription,
+				addComment: addComment,
+				editComment: editComment,
+				deleteComment: deleteComment,
+				changeTime: changeTime,
 			}}>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<Editable
 					onSubmit={changeProjectTitle}
+					selectAllOnFocus={false}
 					defaultValue={boardData.projectTitle}
 					textAlign='center'
 					fontSize='3xl'
@@ -453,7 +531,7 @@ const Board = ({ projectData }: Props) => {
 					{(provided, snapshot) => (
 						<Flex
 							w='100%'
-							minH='75vh'
+							minH='70vh'
 							h='fit-content'
 							overflowX='auto'
 							pb={4}
