@@ -6,7 +6,7 @@ interface Props {
 	currentPriority: any;
 	changePriority: (newPriority: string, id: any) => void;
 	showPBox: (arg0: boolean) => void;
-	id: any;
+	id?: any;
 }
 
 const PrioritySelect = ({ currentPriority, changePriority, showPBox, id }: Props) => {

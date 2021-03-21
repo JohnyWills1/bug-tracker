@@ -61,7 +61,7 @@ const Reporter = ({ reporter, users, changeIssueReporter, id }: Props) => {
 			) : (
 				<Text
 					opacity={0.6}
-					_hover={{ background: "#EDF2F7" }}
+					_hover={{ background: "#EDF2F7", cursor: "pointer" }}
 					rounded='md'
 					w='fit-content'
 					p='8px'
