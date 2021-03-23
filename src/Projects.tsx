@@ -1,12 +1,10 @@
 import { CalendarIcon, StarIcon } from "@chakra-ui/icons";
-import { Button, Flex, Heading, Stack, useDisclosure } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ProjectsList from "./components/Projects/ProjectsList";
 import initialData from "./testdata";
 import { v4 as uuidv4 } from "uuid";
 import { useAuth } from "./contexts/AuthContext";
-import SignIn from "./components/Navbar/SignIn";
-import SignUp from "./components/Navbar/SignUp";
 
 interface Props {}
 
@@ -77,21 +75,6 @@ const Projects = (props: Props) => {
 
 			return newData;
 		});
-	};
-
-	// * ChakraUI
-	// Modal hooks
-	const { isOpen, onOpen, onClose } = useDisclosure();
-
-	// Hooks
-	const [isSignInOpen, setSignInOpen] = useState(false);
-
-	const openSignIn = () => {
-		setSignInOpen(true);
-	};
-
-	const onSignInClose = () => {
-		setSignInOpen(false);
 	};
 
 	return (
