@@ -22,6 +22,7 @@ import QuillEditor from "../../../shared/QuillEditor";
 import Assignees from "../Assignees/Assignees";
 import PrioritySelect from "../Priority/PrioritySelect";
 import Reporter from "../Reporter/Reporter";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
 	isOpen: boolean;
@@ -36,8 +37,9 @@ interface IssueProps {
 
 const CreateIssueModal = ({ isOpen, onClose, addNewIssue, users }: Props) => {
 	// React Hook Forms
-	const { register, handleSubmit, errors, setError, clearErrors } = useForm();
+	const { register, handleSubmit } = useForm();
 
+	// Hooks
 	const [value, setValue] = React.useState("");
 	const [reporter, setReporter] = React.useState("");
 	const [assignees, setAssignees] = React.useState<string[]>([]);
@@ -47,8 +49,28 @@ const CreateIssueModal = ({ isOpen, onClose, addNewIssue, users }: Props) => {
 	// Refs
 	const node = React.useRef<HTMLDivElement>(null);
 
-	const onSubmit = (data: IssueProps) => {
-		console.log(data, value);
+	const changeDesc = (newDesc: any) => {
+		setValue(newDesc);
+	};
+
+	const onSubmit = ({ summary }: IssueProps) => {
+		const issue = {
+			id: uuidv4().toString(),
+			type: "issue",
+			title: summary,
+			description: value,
+			priority: priority,
+			comments: [],
+			assignees: assignees,
+			reporter: reporter,
+			timeEstimate: 0,
+			dateCreated: Date.now().toString(),
+			dateUpdated: Date.now().toString(),
+		};
+
+		addNewIssue(issue);
+		clearData();
+		onClose();
 	};
 
 	const changeIssueReporter = (newReporter: any) => {
@@ -147,6 +169,13 @@ const CreateIssueModal = ({ isOpen, onClose, addNewIssue, users }: Props) => {
 		}
 	};
 
+	const clearData = () => {
+		setValue("");
+		setReporter("");
+		setAssignees([]);
+		setPriority("");
+	};
+
 	return (
 		<>
 			<Modal
@@ -173,8 +202,7 @@ const CreateIssueModal = ({ isOpen, onClose, addNewIssue, users }: Props) => {
 								</FormControl>
 								<FormControl id='description'>
 									<FormLabel>Description</FormLabel>
-									<QuillEditor value={value} setValue={setValue} />
-									{/* Create a new shared Editor component - not dependant on any props */}
+									<QuillEditor value={value} setValue={changeDesc} />
 									<FormHelperText>Describe the issue in as much detail as you'd like.</FormHelperText>
 								</FormControl>
 								<FormControl id='reporter'>
@@ -221,10 +249,16 @@ const CreateIssueModal = ({ isOpen, onClose, addNewIssue, users }: Props) => {
 
 						<ModalFooter>
 							<Stack isInline>
+								<Button
+									onClick={() => {
+										onClose();
+										clearData();
+									}}>
+									Close
+								</Button>
 								<Button colorScheme='blue' type='submit'>
 									Create Issue
 								</Button>
-								<Button onClick={onClose}>Close</Button>
 							</Stack>
 						</ModalFooter>
 					</ModalContent>

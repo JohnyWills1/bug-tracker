@@ -73,6 +73,7 @@ const Assignees = ({ assignees, users, removeAssignee, addAssignee, id }: Props)
 								<TagCloseButton
 									onClick={() => {
 										removeAssignee(name, id);
+										setACapacity(false);
 									}}
 								/>
 							</Tag>
@@ -80,7 +81,11 @@ const Assignees = ({ assignees, users, removeAssignee, addAssignee, id }: Props)
 					})}
 
 					{assignees.length !== users.length && (
-						<Link color='blue.500' onClick={() => setABox(true)}>
+						<Link
+							color='blue.500'
+							onClick={() => {
+								setABox(true);
+							}}>
 							<AddIcon w='14px' h='14px' mr='5px' />
 							Add more
 						</Link>

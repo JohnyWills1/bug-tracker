@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 
 interface Props {
 	value: any;
-	setValue: (data: any) => void;
+	setValue: (data: string) => void;
 }
 
 const QuillEditor = ({ value, setValue }: Props) => {
@@ -26,11 +26,7 @@ const QuillEditor = ({ value, setValue }: Props) => {
 
 	return (
 		<>
-			<Flex flexDirection='column'>
-				<ReactQuill defaultValue={value} modules={quillConfig} onChange={handleChange}>
-					<div className='editing-area' style={{ borderRadius: "0 0 10px 10px" }} />
-				</ReactQuill>
-			</Flex>
+			<ReactQuill defaultValue={value} modules={quillConfig} onChange={handleChange} />
 		</>
 	);
 };

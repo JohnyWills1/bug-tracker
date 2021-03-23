@@ -1,19 +1,5 @@
 import React from "react";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	Button,
-	Flex,
-	Modal,
-	ModalBody,
-	ModalCloseButton,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-	ModalOverlay,
-	useDisclosure,
-} from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, useDisclosure } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import initialData from "../../testdata";
 import Board from "../Kanban/Board";
@@ -26,14 +12,16 @@ interface Props {}
 const Project = (props: Props) => {
 	const { id }: any = useParams();
 
-	const projectData = initialData.find((project: any) => {
+	const initProjectData = initialData.find((project: any) => {
 		return project.id === id;
 	});
+
+	const [projectData, setProjectData]: any = React.useState(initProjectData);
 
 	// Chakra UI
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
-	const addIssue = () => {
+	const openAddIssueModal = () => {
 		onOpen();
 	};
 
@@ -43,12 +31,35 @@ const Project = (props: Props) => {
 	}
 
 	const addNewIssue = (issue: any) => {
-		console.log(issue);
+		setProjectData((prevData: any) => {
+			const newIssues = {
+				...prevData.issues,
+				[issue.id]: issue,
+			};
+
+			const newColumn = {
+				...prevData.columns[prevData.columnOrder[0]],
+				issueIds: [...prevData.columns[prevData.columnOrder[0]].issueIds, issue.id],
+			};
+
+			const newColumns = {
+				...prevData.columns,
+				[prevData.columnOrder[0]]: newColumn,
+			};
+
+			const newData = {
+				...prevData,
+				issues: newIssues,
+				columns: newColumns,
+			};
+
+			return newData;
+		});
 	};
 
 	return (
 		<Flex align='center' px={5} py={6} ml='50px' flexDirection='column' minH='90vh' h='auto'>
-			<Sidebar addIssue={addIssue} />
+			<Sidebar addIssue={openAddIssueModal} />
 
 			<Breadcrumb pb={2}>
 				<BreadcrumbItem>
@@ -61,7 +72,7 @@ const Project = (props: Props) => {
 				</BreadcrumbItem>
 			</Breadcrumb>
 
-			<Board projectData={projectData} />
+			<Board boardData={projectData} setBoardData={setProjectData} />
 
 			<CreateIssueModal isOpen={isOpen} onClose={onClose} addNewIssue={addNewIssue} users={projectData.users} />
 		</Flex>

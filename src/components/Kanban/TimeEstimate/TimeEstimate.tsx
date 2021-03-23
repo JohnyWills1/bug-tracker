@@ -1,5 +1,5 @@
 import { TimeIcon } from "@chakra-ui/icons";
-import { Box, Flex, Input, Progress, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, NumberInput, NumberInputField, Progress, Text, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import TimeEstimateModal from "./TimeEstimateModal";
 
@@ -14,7 +14,7 @@ const TimeEstimate = ({ time, changeTime, id }: Props) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const handleEstChange = (e: any) => {
-		setEstTime(e.target.value);
+		setEstTime(e);
 	};
 
 	const handleChangeTime = (newTime: any) => {
@@ -26,7 +26,9 @@ const TimeEstimate = ({ time, changeTime, id }: Props) => {
 			<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>
 				Time Estimate (Hours)
 			</Text>
-			<Input placeholder={time} onChange={handleEstChange} />
+			<NumberInput defaultValue={estTime} onChange={handleEstChange}>
+				<NumberInputField />
+			</NumberInput>
 
 			<Text textTransform='uppercase' opacity={0.7} fontWeight='700' mt='24px' mb='5px'>
 				Time Tracking

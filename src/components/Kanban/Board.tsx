@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { EditablePreview, EditableInput, Editable, Flex, useToast } from "@chakra-ui/react";
 import Column from "./Column";
 import IssueCard from "./Issue/IssueCard";
@@ -8,12 +8,11 @@ import AddColumn from "./AddColumn";
 import BoardContext from "../../contexts/BoardContext";
 
 interface Props {
-	projectData: any;
+	boardData: any;
+	setBoardData: (newData: any) => void;
 }
 
-const Board = ({ projectData }: Props) => {
-	const [boardData, setBoardData]: any = useState(projectData);
-
+const Board = ({ boardData, setBoardData }: Props) => {
 	const toast = useToast();
 
 	const onDragEnd = (result: any) => {

@@ -28,7 +28,6 @@ import {
 import React from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
-import AddCard from "./AddCard";
 
 interface Props {
 	column: any;
@@ -196,8 +195,6 @@ const Column = ({ column, children, index, addIssue, changeColumnTitle, deleteCo
 									{...provided.droppableProps}>
 									{children}
 									{provided.placeholder}
-
-									<AddCard addIssue={addIssue} columnId={column.id} />
 								</Flex>
 							)}
 						</Droppable>

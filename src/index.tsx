@@ -27,9 +27,8 @@ ReactDOM.render(
 							<PrivateRoute exact path='/projects' component={Projects} />
 							<PrivateRoute exact path='/projects/:id' component={Project} />
 							<PrivateRoute exact path='/update-profile' component={UpdateProfile} />
-							<Route path='/projects/:id/:issueId' component={IssueModal} />
 							<Route exact path='/forgot-password' component={ForgotPassword} />
-							<Route component={PageNotFound} />
+							{/* <Route component={PageNotFound} /> */}
 						</Switch>
 						<Footer />
 					</Loading>
