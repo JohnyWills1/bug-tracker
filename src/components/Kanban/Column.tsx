@@ -52,7 +52,6 @@ interface FormData {
 
 const EditColumn = ({ isOpen, onClose, column, changeColumnTitle, deleteColumn }: EditColumnProps) => {
 	const { register, handleSubmit } = useForm();
-	const initialRef = React.useRef(null);
 	const [alertOpen, setAlertOpen] = React.useState(false);
 	const cancelRef = React.useRef(null);
 
@@ -66,7 +65,7 @@ const EditColumn = ({ isOpen, onClose, column, changeColumnTitle, deleteColumn }
 	};
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef}>
+		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
 			<ModalContent>
 				<ModalHeader>{column.title}</ModalHeader>
@@ -125,10 +124,10 @@ const EditColumn = ({ isOpen, onClose, column, changeColumnTitle, deleteColumn }
 					</ModalBody>
 
 					<ModalFooter>
-						<Button colorScheme='blue' mr={3} onClick={onClose}>
+						<Button mr={3} onClick={onClose}>
 							Close
 						</Button>
-						<Button colorScheme='green' type='submit'>
+						<Button colorScheme='blue' type='submit'>
 							Save Changes
 						</Button>
 					</ModalFooter>

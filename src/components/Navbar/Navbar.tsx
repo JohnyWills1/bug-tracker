@@ -44,7 +44,7 @@ const Navbar = (props: Props) => {
 						letterSpacing='-2px'
 						_hover={{ opacity: 0.7 }}
 						transition='opacity 0.3s ease-in 30ms'>
-						<RouterLink to='/'>Bug Tracker</RouterLink>
+						<RouterLink to='/projects'>Bug Tracker</RouterLink>
 					</Text>
 
 					<Stack w='fit-content' align='center' spacing={5} isInline>
