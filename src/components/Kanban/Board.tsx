@@ -428,7 +428,11 @@ const Board = ({ boardData, setBoardData }: Props) => {
 
 	const addComment = (comment: any, issueId: any) => {
 		setBoardData((prevData: any) => {
-			let newComments = [...prevData.issues[issueId].comments];
+			let newComments: any = [];
+
+			if (prevData.issues[issueId].comments !== undefined) {
+				newComments = [...prevData.issues[issueId].comments];
+			}
 
 			newComments.push(comment);
 
@@ -519,6 +523,7 @@ const Board = ({ boardData, setBoardData }: Props) => {
 					onSubmit={changeProjectTitle}
 					selectAllOnFocus={false}
 					defaultValue={boardData.projectTitle}
+					placeholder='Enter a Project Title'
 					textAlign='center'
 					fontSize='3xl'
 					mb={5}>

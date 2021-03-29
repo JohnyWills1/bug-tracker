@@ -255,7 +255,13 @@ const IssueModal = ({ isOpen, onClose, issue, columnId, columns, users, changeCo
 															<QuillText value={issue.description} />
 														</Box>
 													) : (
-														<Text onClick={() => setEditDesc(true)}>Add a description...</Text>
+														<Text
+															onClick={() => setEditDesc(true)}
+															borderRadius='5px'
+															p='3px 7px'
+															_hover={{ bgColor: "#EDF2F7", cursor: "pointer" }}>
+															Add a description...
+														</Text>
 													)}
 												</>
 											)}
