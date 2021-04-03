@@ -146,10 +146,10 @@ const Column = ({ column, children, index, addIssue, changeColumnTitle, deleteCo
 				{(provided, snapshot) => (
 					<Box
 						rounded='md'
-						bgColor='#F4F5F7'
 						w='100%'
 						minW='280px'
 						h='fit-content'
+						bgColor='#F4F5F7'
 						minH={snapshot.isDragging ? "fit-content" : "100%"}
 						boxShadow={snapshot.isDragging ? "outline" : "none"}
 						transition={snapshot.isDropAnimating ? "box-shadow 1200ms" : "box-shadow 1200ms"}
@@ -184,11 +184,12 @@ const Column = ({ column, children, index, addIssue, changeColumnTitle, deleteCo
 									py={4}
 									px={6}
 									w='100%'
-									minH='100vh'
+									minH='80vh'
 									align='center'
 									rounded='xl'
 									borderTopLeftRadius='0'
 									borderTopRadius='0'
+									background={snapshot.isDraggingOver ? "linear-gradient(135deg,#BEE3F8,#63B3ED);" : "#F4F5F7"}
 									flexDirection='column'
 									ref={provided.innerRef}
 									{...provided.droppableProps}>
