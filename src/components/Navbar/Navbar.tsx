@@ -1,10 +1,26 @@
 import React, { useState } from "react";
-import { Box, Flex, Stack, Text, Button, Link, useDisclosure } from "@chakra-ui/react";
+import {
+	Box,
+	Flex,
+	Stack,
+	Text,
+	Button,
+	Link,
+	useDisclosure,
+	Avatar,
+	AvatarBadge,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+	MenuGroup,
+	MenuDivider,
+} from "@chakra-ui/react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { Link as RouterLink, useHistory, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { CalendarIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, CalendarIcon, ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
 
 interface Props {}
 
@@ -61,27 +77,34 @@ const Navbar = (props: Props) => {
 										bgColor={"#F4F5F7"}
 										shadow={pathname === "/projects" ? "outline" : "none"}
 										_hover={{ bgColor: "#EBECF0" }}>
-										<CalendarIcon w={5} h={5} color='red.400' />
+										<CalendarIcon w={5} h={5} />
 									</Flex>
-									<Link
-										as={RouterLink}
-										to='/update-profile'
-										p={2}
-										rounded='lg'
-										bgColor='#F4F5F7'
-										shadow={pathname === "/update-profile" ? "outline" : "none"}
-										_hover={{ bgColor: "#EBECF0" }}>
-										{user.email}
-									</Link>
-									<Button
-										colorScheme='red'
-										onClick={() => {
-											onClose();
-											signOut();
-											history.push("/");
-										}}>
-										Sign Out
-									</Button>
+
+									<Menu>
+										<MenuButton style={{ cursor: "pointer" }}>
+											<Avatar name={user.email} size='md'>
+												<AvatarBadge boxSize='1.25em' bg='green.500' />
+											</Avatar>
+										</MenuButton>
+
+										<MenuList>
+											<MenuGroup textAlign='center' title={user.displayName}>
+												<MenuDivider />
+												<MenuItem icon={<EditIcon />} as={RouterLink} to='/update-profile'>
+													Update Profile
+												</MenuItem>
+												<MenuItem
+													icon={<ArrowForwardIcon />}
+													onClick={() => {
+														onClose();
+														signOut();
+														history.push("/");
+													}}>
+													Sign Out
+												</MenuItem>
+											</MenuGroup>
+										</MenuList>
+									</Menu>
 								</>
 							) : (
 								<>
