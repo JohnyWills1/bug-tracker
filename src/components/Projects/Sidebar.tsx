@@ -1,5 +1,5 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, IconButton } from "@chakra-ui/react";
 import React from "react";
 import { Icon, ItemText, NavLeft } from "./Styles";
 
@@ -10,21 +10,18 @@ interface Props {
 const Sidebar = ({ addIssue }: Props) => {
 	return (
 		<>
-			<NavLeft>
-				<Flex justify='center' align='center' flexDirection='column' pt='20px'>
-					<Icon>
-						<AddIcon w='22px' h='24px' />
-					</Icon>
-					<Box onClick={() => addIssue()}>
-						<ItemText>
-							<Flex justify='center' align='center'>
-								<AddIcon w='22px' h='24px' mr='10px' />
-								Add Issue
-							</Flex>
-						</ItemText>
-					</Box>
-				</Flex>
-			</NavLeft>
+			<Flex
+				justify='center'
+				align='center'
+				position='fixed'
+				left='0px'
+				top='50%'
+				background='linear-gradient(135deg, #dc2f02, #e85d04 , #faa307);'
+				borderRadius='0px 100px 100px 0px'
+				w='60px'
+				h='80px'>
+				<IconButton icon={<AddIcon />} onClick={() => addIssue()} rounded='full' aria-label='add issue to project' />
+			</Flex>
 		</>
 	);
 };

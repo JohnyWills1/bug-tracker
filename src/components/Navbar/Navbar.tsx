@@ -5,7 +5,6 @@ import {
 	Stack,
 	Text,
 	Button,
-	Link,
 	useDisclosure,
 	Avatar,
 	AvatarBadge,
@@ -20,7 +19,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { Link as RouterLink, useHistory, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { ArrowForwardIcon, CalendarIcon, ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, CalendarIcon, EditIcon } from "@chakra-ui/icons";
 
 interface Props {}
 
@@ -67,19 +66,6 @@ const Navbar = (props: Props) => {
 						<>
 							{user ? (
 								<>
-									<Flex
-										as={RouterLink}
-										to='/projects'
-										mr={1}
-										p={2}
-										align='center'
-										rounded='lg'
-										bgColor={"#F4F5F7"}
-										shadow={pathname === "/projects" ? "outline" : "none"}
-										_hover={{ bgColor: "#EBECF0" }}>
-										<CalendarIcon w={5} h={5} />
-									</Flex>
-
 									<Menu>
 										<MenuButton style={{ cursor: "pointer" }}>
 											<Avatar name={user.email} size='md'>

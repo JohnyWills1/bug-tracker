@@ -83,7 +83,7 @@ const UpdateProfile = (props: Props) => {
 			<Box border='1px solid #EBEBEB' shadow='md' rounded='lg' p={5} m={5} w='400px' h='fit-content'>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<Stack spacing={4}>
-						<Heading textAlign='center' bgClip='text' bgGradient='linear(to-r, #05668d,#00a896,#02c39a)'>
+						<Heading textAlign='center' bgClip='text' bgGradient='linear(to-r, #dc2f02, #e85d04 , #faa307)'>
 							Update Profile
 						</Heading>
 

@@ -2,6 +2,7 @@ import React from "react";
 import { Text, Flex, Avatar, Stack, Link, Button, Textarea } from "@chakra-ui/react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { v4 as uuidv4 } from "uuid";
+import IssueComment from "./IssueComment";
 
 interface Props {
 	comments?: [
@@ -22,6 +23,7 @@ interface Props {
 const IssueComments = ({ comments, addComment, id, deleteComment, editComment }: Props) => {
 	const [showCommentButtons, setShowCommentButtons] = React.useState(false);
 	const [comment, setComment] = React.useState("");
+	const [editingComment, setEditComment] = React.useState(false);
 
 	const handleComment = (comment: any) => {
 		const newComment = {
@@ -36,9 +38,10 @@ const IssueComments = ({ comments, addComment, id, deleteComment, editComment }:
 		setComment("");
 	};
 
-	// const handleCommentEdit = (comment: any) => {
-	//     comment
-	// }
+	const handleCommentEdit = (comment: any) => {
+		console.log("Edit this comment", comment);
+		setEditComment(true);
+	};
 
 	const handleCommentDelete = (commentId: any) => {
 		deleteComment(commentId, id);
@@ -89,31 +92,13 @@ const IssueComments = ({ comments, addComment, id, deleteComment, editComment }:
 			{comments &&
 				comments.map((comment: any) => {
 					return (
-						<Flex mt='25px' key={comment.id}>
-							<Avatar size='sm' name={comment.userName} />
-
-							<Flex pl='25px' justify='flex-start' flexDirection='column' w='100%'>
-								<Stack spacing={2} isInline>
-									<Text p='0 12px 10px 0' fontWeight='600'>
-										{comment.userName}
-									</Text>
-									<Text>{getDate(comment.datePosted)}</Text>
-								</Stack>
-
-								<Text w='100%' pb='10px'>
-									{comment.content}
-								</Text>
-
-								<Stack w='fit-content' isInline>
-									<Link opacity={0.6} textAlign='left' onClick={() => console.log(comment.id)}>
-										Edit
-									</Link>
-									<Link opacity={0.6} textAlign='left' onClick={() => handleCommentDelete(comment.id)}>
-										Delete
-									</Link>
-								</Stack>
-							</Flex>
-						</Flex>
+						<IssueComment
+							key={comment.id}
+							comment={comment}
+							getDate={getDate}
+							handleCommentDelete={handleCommentDelete}
+							handleCommentEdit={handleCommentEdit}
+						/>
 					);
 				})}
 		</>
