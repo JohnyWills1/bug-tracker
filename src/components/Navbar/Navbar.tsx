@@ -68,7 +68,7 @@ const Navbar = (props: Props) => {
 								<>
 									<Menu>
 										<MenuButton style={{ cursor: "pointer" }}>
-											<Avatar name={user.email} size='md'>
+											<Avatar name={user.displayName} size='md'>
 												<AvatarBadge boxSize='1.25em' bg='green.500' />
 											</Avatar>
 										</MenuButton>

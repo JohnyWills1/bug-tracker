@@ -144,7 +144,6 @@ const initialData = [
 		projectTitle: "Test 3",
 		starred: false,
 	},
-
 	{
 		id: "project-4",
 		issues: {
@@ -175,7 +174,6 @@ const initialData = [
 		projectTitle: "Test 4",
 		starred: false,
 	},
-
 	{
 		id: "project-5",
 		issues: {
