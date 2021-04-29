@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Flex, Avatar, Stack, Link, Button, Textarea } from "@chakra-ui/react";
+import { Text, Flex, Avatar, Stack, Button, Textarea } from "@chakra-ui/react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { v4 as uuidv4 } from "uuid";
 import IssueComment from "./IssueComment";

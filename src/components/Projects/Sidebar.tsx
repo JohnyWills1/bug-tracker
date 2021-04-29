@@ -1,7 +1,6 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Flex, IconButton } from "@chakra-ui/react";
+import { Flex, IconButton } from "@chakra-ui/react";
 import React from "react";
-import { Icon, ItemText, NavLeft } from "./Styles";
 
 interface Props {
 	addIssue: () => void;

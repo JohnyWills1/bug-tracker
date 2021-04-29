@@ -17,9 +17,9 @@ import {
 } from "@chakra-ui/react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { Link as RouterLink, useHistory, useLocation } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { ArrowForwardIcon, CalendarIcon, EditIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, EditIcon } from "@chakra-ui/icons";
 
 interface Props {}
 
@@ -27,7 +27,7 @@ const Navbar = (props: Props) => {
 	// Auth Context
 	const { user, signOut } = useAuth();
 
-	const { pathname }: any = useLocation();
+	// const { pathname }: any = useLocation();
 
 	// * ChakraUI
 	// Modal hooks
